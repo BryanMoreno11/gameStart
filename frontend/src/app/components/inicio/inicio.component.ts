@@ -15,6 +15,7 @@ export class InicioComponent {
 //------------------------------------Métodos--------------------------------------
  //#region Swipers
  ngOnInit(): void {
+  this.inicializarSwiperPrincipal();
  }
  inicializarSwiperPrincipal(){
   const swiperPrincipalElementConstrutor= document.querySelector('.swiper-principal');

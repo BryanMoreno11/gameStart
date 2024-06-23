@@ -8,6 +8,10 @@
     object-fit: cover;
 }
 
+.swiper-principal:hover{
+    cursor: pointer;
+}
+
 
 /*Media Queries*/
 @media(width<768px) {
