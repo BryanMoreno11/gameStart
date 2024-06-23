@@ -1,0 +1,18 @@
+.swiper-principal{
+    height: 500px;
+}
+
+.swiper-principal swiper-slide  img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+/*Media Queries*/
+@media(width<768px) {
+    .swiper-principal{
+        height: 420px;
+    }
+
+}
