@@ -19,6 +19,29 @@ async function getVideojuegos(req, res) {
     }
 }
 
+async function getVideojuego(req, res){
+    const {id}=req.params;
+    const query= 'SELECT * FROM vista_videojuego where id_videojuego_plataforma=:id'
+    const values= {id:id};
+
+    try{
+        const connection= await oracledb.getConnection(dbConfig);
+        const result= await connection.execute(query, values, { outFormat: oracledb.OUT_FORMAT_OBJECT });
+        await connection.close();
+        res.status(200);
+        if (result.rows.length>0){
+            mapearImagen(result.rows[0]);
+            res.json(result.rows);
+        }else{
+            res.status(500).json({ message: 'No existe el videojuego' });
+        }
+
+    }catch(err){
+        res.status(500).json({ error: "Error en el servidor" });
+
+    }
+}
+
 function mapearImagenes(videojuegos){
     videojuegos.map(videojuego=> {
         if(videojuego.IMAGEN){
@@ -27,6 +50,13 @@ function mapearImagenes(videojuegos){
         });
 }
 
+function mapearImagen(videojuego){
+    if(videojuego.IMAGEN){
+        videojuego.IMAGEN= videojuego.IMAGEN.split('\n');
+    }
+}
+
 module.exports={
-getVideojuegos
+getVideojuegos,
+getVideojuego
 };

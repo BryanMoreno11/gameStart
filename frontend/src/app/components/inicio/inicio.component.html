@@ -9,3 +9,30 @@
         <img src="https://wallpapers.com/images/featured/zelda-botw-6egmrfhs4b21a0t7.jpg" alt="">
     </swiper-slide>
     </swiper-container>
+
+    <h4>VIDEOJUEGOS RECIENTES</h4>
+    <hr>
+    <swiper-container class="swiper-videojuegos" init="false" >
+        @for(videojuego of videojuegos; track videojuego.ID_VIDEOJUEGO){
+            <swiper-slide >
+                <div class="card">
+                    <div class="header">
+                        <img src={{videojuego.IMAGEN[0]}} alt="" loading="lazy">
+
+                    </div>
+                    <div class="content">
+                        
+                        <p class="bold">{{videojuego.TITULO}}</p>
+                        <div >
+                            <p class="bold">Costo:</p>
+                            <p> {{videojuego.PRECIO}}$</p>
+                        </div>
+                        <div >
+                            <p class="bold">Consola:</p>
+                            <p> {{videojuego.NOMBRE_PLATAFORMA}}</p>
+                        </div>
+                    </div>
+                </div>
+            </swiper-slide>
+        }
+      </swiper-container>

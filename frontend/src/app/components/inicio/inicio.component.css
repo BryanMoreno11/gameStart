@@ -1,3 +1,4 @@
+/*Swiper Principal*/
 .swiper-principal{
     height: 500px;
 }
@@ -12,6 +13,49 @@
     cursor: pointer;
 }
 
+/*Swiper Videojuegos*/
+
+.swiper-videojuegos {
+    margin-top: 30px;
+    width: 100%;
+    height: 100%;
+  }
+
+  .swiper-videojuegos swiper-slide{
+   height: auto;
+   width:auto ;
+   margin-bottom: 40px;
+
+}
+
+swiper-slide:hover{
+    cursor: pointer;
+}
+
+.swiper-videojuegos img{
+    height:100%;
+    width: 100%;
+
+}
+
+
+.content{
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+}
+
+.content >*{
+    margin: 0 0;
+}
+
+.content >div>*{
+    display: inline;
+}
+
+.bold{
+    font-weight: bold;
+}
 
 /*Media Queries*/
 @media(width<768px) {

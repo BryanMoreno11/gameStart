@@ -6,7 +6,8 @@ async function getPlataformas(req, res) {
         // Conectar a Oracle utilizando la configuración exportada
         const connection = await oracledb.getConnection(dbConfig);
         // Ejecutar la consulta
-        const result = await connection.execute('SELECT * FROM plataforma');
+        const result = await connection.execute('SELECT * FROM plataforma', [],
+            { outFormat: oracledb.OUT_FORMAT_OBJECT });
         console.log(result.row);
         // Liberar la conexión
         await connection.close();
@@ -25,7 +26,7 @@ async function getPlataforma(req, res){
 
     try{
         const connection= await oracledb.getConnection(dbConfig);
-        const result= await connection.execute(query, values);
+        const result= await connection.execute(query, values, { outFormat: oracledb.OUT_FORMAT_OBJECT });
         await connection.close();
         res.status(200);
         if (result.rows.length>0){
