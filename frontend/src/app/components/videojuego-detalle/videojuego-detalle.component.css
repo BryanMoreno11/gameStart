@@ -1,10 +1,15 @@
 
 /*Estilos generales*/
+.swiper-principal img{
+    max-height: 650px;
+
+}
+
 .container{
     display: grid;
-    grid-template-columns: 40% 1fr;
+    grid-template-columns: 60% 1fr;
     gap: 30px;
-    margin:  auto 70px;
+    margin:  auto 20px;
  }
 
  .detalles>*{
@@ -22,12 +27,13 @@
  }
 
  .galeria{
-   border: 1px solid red;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), /* Sombra suave */
+    0 6px 20px rgba(0, 0, 0, 0.1);
+
 }
 
-.detalles{
-    border: 1px solid blue;
-}
+
+
 
 /*Estilos para lograr el efecto de zoom*/
 
@@ -52,6 +58,7 @@
 /*Estilos para los swiper*/
 
 swiper-container{
+
     height: auto;
     width: 100%;
 }
@@ -67,6 +74,11 @@ swiper-slide{
 swiper-slide img{
     height:100%;
     width: 100%;
+
+}
+
+.swiper-miniatura img{
+    object-fit: cover;
 }
 
 

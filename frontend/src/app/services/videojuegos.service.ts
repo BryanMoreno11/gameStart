@@ -15,8 +15,14 @@ getVideojuegos(){
   return this.http.get(`${this.API_URL}videojuegos`);
 }
 
+getVideojuegosRecientes(){
+  return this.http.get(`${this.API_URL}videojuegos/recientes`);
+}
+
 getVideojuego(id:number){
   return this.http.get(`${this.API_URL}videojuego/${id}`);
 }
+
+
 
 }

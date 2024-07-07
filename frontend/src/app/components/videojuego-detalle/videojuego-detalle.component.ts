@@ -33,7 +33,7 @@ export class VideojuegoDetalleComponent implements OnInit {
   }
  
   ngOnInit(): void {
-
+    window.scrollTo(0, 0);
     this.inicializarSwiperPrincipal();
     this.inicializarSwiperMiniatura();
     //Obtener Videojuego
@@ -75,10 +75,9 @@ export class VideojuegoDetalleComponent implements OnInit {
     const swiperPrincipalElementConstrutor= document.querySelector('.swiper-principal');
     const swiperPrincipalOptions:SwiperOptions={
       direction: 'horizontal',
-      navigation: {
-        enabled:true,
-
-      }
+      autoHeight:true,
+      navigation:true,
+      
     };
     if(swiperPrincipalElementConstrutor){
       Object.assign(swiperPrincipalElementConstrutor, swiperPrincipalOptions);

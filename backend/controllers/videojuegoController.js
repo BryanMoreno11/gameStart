@@ -19,6 +19,25 @@ async function getVideojuegos(req, res) {
     }
 }
 
+async function getVideojuegosRecientes(req, res) {
+    try {
+        // Conectar a Oracle utilizando la configuración exportada
+        const connection = await oracledb.getConnection(dbConfig);
+        // Ejecutar la consulta
+        const result = await connection.execute('SELECT * FROM vista_videojuego ORDER BY fecha_creacion_videojuego FETCH FIRST 10 ROWS ONLY', [],
+            { outFormat: oracledb.OUT_FORMAT_OBJECT });
+        // Liberar la conexión
+        await connection.close();
+        mapearImagenes(result.rows);
+        // Enviar el resultado como respuesta JSON
+        res.json(result.rows);
+    } catch (err) {
+        console.error('Error en la consulta:', err);
+        res.status(500).json({ error: 'Error en el servidor' });
+    }
+}
+
+
 async function getVideojuego(req, res){
     const {id}=req.params;
     const query= 'SELECT * FROM vista_videojuego where id_videojuego_plataforma=:id'
@@ -58,5 +77,6 @@ function mapearImagen(videojuego){
 
 module.exports={
 getVideojuegos,
-getVideojuego
+getVideojuego,
+getVideojuegosRecientes
 };

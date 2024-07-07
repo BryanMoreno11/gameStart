@@ -1,15 +1,21 @@
-/*Swiper Principal*/
-.swiper-principal{
-    height: 500px;
+/*Estilos generales*/
+main {
+    margin: auto 15px;
 }
 
-.swiper-principal swiper-slide  img{
+/*Swiper Principal*/
+.swiper-principal {
+    margin: 0 0;
+    padding: 0 0;
+}
+
+.swiper-principal swiper-slide img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+
 }
 
-.swiper-principal:hover{
+.swiper-principal:hover {
     cursor: pointer;
 }
 
@@ -19,48 +25,65 @@
     margin-top: 30px;
     width: 100%;
     height: 100%;
-  }
+}
 
-  .swiper-videojuegos swiper-slide{
-   height: auto;
-   width:auto ;
-   margin-bottom: 40px;
+.swiper-videojuegos swiper-slide {
+    height: auto;
+    width: auto;
+    margin-bottom: 40px;
+
 
 }
 
-swiper-slide:hover{
+swiper-slide:hover {
     cursor: pointer;
 }
 
-.swiper-videojuegos img{
-    height:100%;
-    width: 100%;
+.card {
+    height: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1),
+        0 2px 4px rgba(0, 0, 0, 0.06);
+
 
 }
 
+.swiper-videojuegos img {
 
-.content{
+    width: 100%;
+    height: 100%;
+}
+
+
+.content {
     display: flex;
     flex-direction: column;
-    padding: 5px;
+
 }
 
-.content >*{
+.content>* {
     margin: 0 0;
 }
 
-.content >div>*{
+.content>div>* {
     display: inline;
 }
 
-.bold{
+.bold {
     font-weight: bold;
 }
 
 /*Media Queries*/
 @media(width<768px) {
-    .swiper-principal{
-        height: 420px;
+    .swiper-principal {
+        height: 130px;
     }
 
+    .content {
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    main {
+        text-align: center;
+    }
 }

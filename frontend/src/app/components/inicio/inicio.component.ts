@@ -2,10 +2,11 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit, signal } from '@angular/core
 import {SwiperContainer} from 'swiper/element/bundle';
 import {SwiperOptions} from 'swiper/types';
 import { VideojuegosService } from '../../services/videojuegos.service';
+import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-inicio',
   standalone: true,
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './inicio.component.html',
   styleUrl: './inicio.component.css',
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
@@ -23,7 +24,7 @@ constructor(private videojuegos_service:VideojuegosService){
  //#region Swipers
  ngOnInit(): void {
   //Obtener Videojuegos
- this.videojuegos_service.getVideojuegos().subscribe(res=>{
+ this.videojuegos_service.getVideojuegosRecientes().subscribe(res=>{
   this.videojuegos=res;
   console.log(this.videojuegos);
  });
@@ -52,9 +53,11 @@ inicializarSwiperVideojuegos(){
   const swiperVideojuegoElementConstrutor= document.querySelector('.swiper-videojuegos');
   const swiperVideojuegoOptions:SwiperOptions={
     pagination:true,
+    slidesPerView:2,
+    spaceBetween:10,
     breakpoints: {    
       768: {
-        slidesPerView: 2,
+        slidesPerView: 3,
         spaceBetween: 30
       },
       992: {
@@ -66,12 +69,7 @@ inicializarSwiperVideojuegos(){
         spaceBetween: 30
       },          
     },
-    spaceBetween: 30,
-    navigation: {
-      enabled:true,
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
-    }
+
   };
   if(swiperVideojuegoElementConstrutor){
     Object.assign(swiperVideojuegoElementConstrutor, swiperVideojuegoOptions);
