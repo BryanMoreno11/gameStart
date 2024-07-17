@@ -10,7 +10,7 @@
         <p>Por favor escanee su QR para obtener un token</p>
         <div class="input-container">
             <div class="token">
-                <img *ngIf="qrCodeImage" [src]="qrCodeImage" alt="QR code" />
+                <img *ngIf="qrCodeUrl" [src]="qrCodeUrl" alt="QR code" />
             </div>
             <button class="button-verify">Continuar</button>
         </div>

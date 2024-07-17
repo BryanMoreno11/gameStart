@@ -2,6 +2,10 @@ import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common'
+import { ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -13,21 +17,50 @@ import { CommonModule } from '@angular/common'
 })
 export class VerificacionTokenComponent {
   authToken: string = '';
-  secret: string = 'I>n9IRubeqrIK0B>QZhT,@B.x7C2^N!i';
+  secret: string = '';
   verificationResult: boolean | null = null;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private route: ActivatedRoute, private http: HttpClient, private router:Router) { }
+
+  ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+        const nombre = params['nombre'];
+        console.log('El nombre es:', nombre);
+    });
+}
+
+getSecret(nombre: string) {
+    this.http.get<any>(`http://localhost:3000/api/usuarionombre/${nombre}`).subscribe(
+        res => {
+          this.secret = res[0].SECRET;
+        },
+        err => {
+            console.log(err);
+        }
+    );
+}
+  
 
   verify(): void {
     this.authService.verifyToken(this.authToken, this.secret).subscribe(
       response => {
         this.verificationResult = response.verified;
+        Swal.fire({
+          title: 'Verificacion exitosa',
+          text: 'Has iniciado sesion',
+          icon: 'success'
+        })
+        this.router.navigate(['/']);
       },
       error => {
         console.error('Error en la verificación del token:', error);
         this.verificationResult = false;
+        Swal.fire({
+          title: 'Codigo de verificación incorrecto',
+          text: 'No se ha iniciado sesion',
+          icon: 'error'
+        })
       }
     );
   }
-
 }

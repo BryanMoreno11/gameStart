@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common'
+import { ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-authenticate-qr',
@@ -11,18 +13,31 @@ import { CommonModule } from '@angular/common'
   styleUrl: './authenticate-qr.component.css'
 })
 export class AuthenticateQrComponent implements OnInit {
-  qrCodeImage: string |  null = null;
+  qrCodeUrl: string |  null = null;
+  errorMessage: string | null = null;
 
-  constructor(private authService: AuthService) { }
+  constructor(private route: ActivatedRoute, private http: HttpClient) { }
 
-  ngOnInit(): void {
-    this.authService.generateQRCode().subscribe(
-      data => {
-        this.qrCodeImage = data.qrCode;
+  ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      const nombre = params['nombre'];
+      this.generateQRCode(nombre);
+    });
+  }
+
+  generateQRCode(nombre: string) {
+    this.http.get<any>(`http://localhost:3000/api/generate-qr`, { params: { nombre } }).subscribe(
+      res => {
+        if (res.qrCode) {
+          this.qrCodeUrl = res.qrCode;
+        } else {
+          this.errorMessage = 'No se pudo generar el código QR.';
+        }
       },
-      error=>{
-        console.error('Error al generar el código QR:', error);
+      err => {
+        console.error('Error:', err);
+        this.errorMessage = 'Ocurrió un error al generar el código QR.';
       }
-    )
+    );
   }
 }

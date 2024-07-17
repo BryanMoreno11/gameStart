@@ -3,6 +3,7 @@ import { Usuario, UsuariosService } from '../../services/usuarios.service';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-user',
@@ -16,7 +17,7 @@ export class LoginUserComponent {
   nombre: string = '';
   contrasenia: string = '';
   
-  constructor(private http:HttpClient, private usuariosService:UsuariosService) {}
+  constructor(private http:HttpClient, private usuariosService:UsuariosService, private router:Router) {}
 
   getUsuario(){
     this.usuariosService.getUsuarioLogin(this.nombre, this.contrasenia).subscribe(
@@ -28,6 +29,7 @@ export class LoginUserComponent {
             icon: 'success'
           })
         }
+        this.router.navigate(['/token-verify'], { queryParams: { nombre: this.nombre } });
       },
       err => {
         Swal.fire({
