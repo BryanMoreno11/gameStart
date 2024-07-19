@@ -4,7 +4,9 @@ const oracledb = require('oracledb');
 const dbConfig = require('../database');
 
 async function verify(req, res) {
+    console.log('Verificando token...');
     const { auth_token, secret } = req.body;
+    console.log('secret: ' + secret);
     console.log(auth_token + " " + secret);
     try {
         const verified = speakeasy.totp.verify({

@@ -26,6 +26,7 @@ export class VerificacionTokenComponent {
     this.route.queryParams.subscribe(params => {
         const nombre = params['nombre'];
         console.log('El nombre es:', nombre);
+        this.getSecret(nombre);
     });
 }
 

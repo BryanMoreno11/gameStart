@@ -29,6 +29,7 @@ export class LoginUserComponent {
             icon: 'success'
           })
         }
+        console.log(res);
         this.router.navigate(['/token-verify'], { queryParams: { nombre: this.nombre } });
       },
       err => {
