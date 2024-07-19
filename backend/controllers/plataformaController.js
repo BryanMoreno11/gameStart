@@ -19,6 +19,24 @@ async function getPlataformas(req, res) {
     }
 }
 
+async function getPlataformasVideojuegos(req, res) {
+    try {
+        // Conectar a Oracle utilizando la configuración exportada
+        const connection = await oracledb.getConnection(dbConfig);
+        // Ejecutar la consulta
+        const result = await connection.execute('select DISTINCT plataforma.ID_PLATAFORMA, plataforma.NOMBRE from plataforma inner join videojuego_plataforma ON plataforma.ID_PLATAFORMA= videojuego_plataforma.ID_PLATAFORMA', [],
+            { outFormat: oracledb.OUT_FORMAT_OBJECT });
+        console.log(result.row);
+        // Liberar la conexión
+        await connection.close();
+        // Enviar el resultado como respuesta JSON
+        res.json(result.rows);
+    } catch (err) {
+        console.error('Error en la consulta:', err);
+        res.status(500).json({ error: 'Error en el servidor' });
+    }
+}
+
 async function getPlataforma(req, res){
     const {id}=req.params;
     const query= 'SELECT * FROM plataforma where id_plataforma=:id'
@@ -114,5 +132,6 @@ module.exports = {
     getPlataforma,
     createPlataforma,
     updatePlataforma,
-    deletePlataforma
+    deletePlataforma,
+    getPlataformasVideojuegos
 };

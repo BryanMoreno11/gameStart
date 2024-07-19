@@ -1,0 +1,89 @@
+import { Component, OnInit } from '@angular/core';
+import { VideojuegosService } from '../../services/videojuegos.service';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { PlataformaService } from '../../services/plataforma.service';
+@Component({
+  selector: 'app-videojuegos',
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  templateUrl: './videojuegos.component.html',
+  styleUrl: './videojuegos.component.css'
+})
+export class VideojuegosComponent implements OnInit {
+  //#region Variables
+  videojuegos:any;
+  videojuegos_auxiliar:any;
+  plataformas:any;
+  metodoOrdenamientoSeleccionado:string="defecto";
+  plataforma:string="";
+
+
+
+  //#region Métodos
+  ngOnInit(){
+    this.obtenerVideojuegos();
+    this.obtenerPlataformas();
+    
+  }
+
+  constructor(private videojuegos_service:VideojuegosService, private plataforma_service:PlataformaService){
+
+  }
+
+  obtenerVideojuegos(){
+    this.videojuegos_service.getVideojuegos().subscribe(res=>
+      {this.videojuegos=res;
+        this.videojuegos_auxiliar=res;
+      }
+
+    )
+  }
+
+  obtenerPlataformas(){
+    this.plataforma_service.getPlataformasVideojuego().subscribe(res=>{
+      this.plataformas=res;
+      console.log(this.plataformas);
+    })
+  }
+
+  //Métodos de ordenamiento
+  ordenarMetodos( forma:string){
+    switch(forma){
+      case "defecto":
+      this.ordenarDefecto();
+        break;
+      case "menorMayor":
+        this.ordenarMenorMayor();
+        break;
+      case "mayorMenor":
+        this.ordenarMayormenor();
+        
+    }
+  }
+
+ordenarMenorMayor(){
+  this.videojuegos=this.videojuegos.sort((a:any,b:any)=>a.PRECIO-b.PRECIO);
+}
+
+ordenarMayormenor(){
+  this.videojuegos=this.videojuegos.sort((a:any,b:any)=>b.PRECIO-a.PRECIO);
+}
+
+ordenarDefecto(){
+  this.videojuegos=this.videojuegos.sort((a:any,b:any)=>a.TITULO.toLowerCase() < b.TITULO.toLowerCase() ? -1 : 1);
+
+}
+
+//Métodos de clasificación
+
+clasificarporCategoria(plataforma:string){
+   Object.assign(this.videojuegos,this.videojuegos_auxiliar);
+  this.ordenarMetodos(this.metodoOrdenamientoSeleccionado);
+  if(plataforma!=""){
+    this.videojuegos=this.videojuegos.filter((videojuego:any)=> videojuego.NOMBRE_PLATAFORMA==plataforma);
+  }
+}
+
+
+}

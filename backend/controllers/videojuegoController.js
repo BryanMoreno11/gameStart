@@ -6,7 +6,7 @@ async function getVideojuegos(req, res) {
         // Conectar a Oracle utilizando la configuración exportada
         const connection = await oracledb.getConnection(dbConfig);
         // Ejecutar la consulta
-        const result = await connection.execute('SELECT * FROM vista_videojuego', [],
+        const result = await connection.execute('SELECT * FROM vista_videojuego ORDER BY TITULO', [],
             { outFormat: oracledb.OUT_FORMAT_OBJECT });
         // Liberar la conexión
         await connection.close();
