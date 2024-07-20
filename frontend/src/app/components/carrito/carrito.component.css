@@ -7,6 +7,9 @@
   margin: 5px;
   
 }
+a{
+  text-decoration: none;
+}
 
 img{
   width: 150px;
@@ -25,11 +28,7 @@ aside{
   height: fit-content;
 }
 
-aside .aside-content{
-  display: flex;
-  flex-direction: row;
-  justify-content:space-between;
-}
+
 
 aside button{
   height: 50px;
@@ -37,11 +36,16 @@ aside button{
   color: white;
   border-radius: 5px;
   border: none;
+  margin-bottom: 8px;
 }
 
 aside button:hover{
   cursor: pointer;
   background-color: #E73741;
+}
+
+aside a {
+  margin-left: 10px;
 }
 
 
@@ -67,45 +71,24 @@ aside button:hover{
 .informacion .botones{
   display: flex;
   flex-direction: row;
-  gap: 5px;
+  gap: 10px;
 }
 
-.informacion .botones input{
-  border-radius: 5px;
-  width: 100px;
-  height: 30px;
 
-}
 
-.informacion .botones button{
+.informacion .botones .eliminar-btn{
   border: none;
   border-radius: 5px;
-  width: 107.2px;
-  height: 35.2px;
+  width: 110px;
+  height: 30px;
   background-color: #095493;
   color: white;
 }
 
-.informacion .botones button:hover{
+.informacion .botones .eliminar-btn:hover{
   cursor: pointer;
   background-color: #E73741;
 }
-
-/*Media queries*/
-@media(width<=768px){
-
-  .container{
-    grid-template-columns: 1fr;
-  }
-  
-.informacion .botones{
-  display: flex;
-  flex-direction: column;
-}
-
-
-}
-
 
 .quantity-input {
   display: flex;
@@ -138,4 +121,22 @@ aside button:hover{
   -webkit-appearance: none;
   margin: 0;
 }
+
+/*Media queries*/
+@media(width<=768px){
+
+  .container{
+    grid-template-columns: 1fr;
+  }
+  
+.informacion .botones{
+  display: flex;
+  flex-direction: column;
+}
+
+
+}
+
+
+
 
