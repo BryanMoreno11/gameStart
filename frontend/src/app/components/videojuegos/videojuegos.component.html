@@ -19,11 +19,11 @@
     <div class="galeria">
         @for (videojuego of videojuegos; track videojuego.ID_VIDEOJUEGO_PLATAFORMA) {
         <div class="card">
-            <img [src]="videojuego.IMAGEN[0]" alt="">
+            <img [src]="videojuego.IMAGEN[0]" alt=""  [routerLink]="['/videojuego',videojuego.ID_VIDEOJUEGO_PLATAFORMA]">
             <div class="card-body">
                 <p class="bold">{{videojuego.TITULO}}</p>
                 <p>{{videojuego.PRECIO | currency}}</p>
-                <button class="button"><p>Añadir al carrito</p></button>
+                <button (click)="agregarVideojuego(videojuego)" class="button"><p>Añadir al carrito</p></button>
             </div>
         </div>
         }
@@ -31,3 +31,5 @@
     </div>
 
 </div>
+
+

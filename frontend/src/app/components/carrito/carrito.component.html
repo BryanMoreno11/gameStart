@@ -1,0 +1,54 @@
+<div class="container">
+
+    <table class="productos">
+        <thead class="encabezado">
+            <tr>
+                <th><h1>Carrito</h1></th>
+            </tr>
+        </thead>
+        <hr>
+
+        <tbody>
+            @for(producto of productos;track producto.videojuego.ID_VIDEOJUEGO_PLATAFORMA){
+                <tr class="fila" >
+                    <td  class="contenido">
+                    
+                    <div class="imagen">
+                        <img [src]="producto.videojuego.IMAGEN[0]" alt="">
+                    </div>
+    
+                    <div class="informacion">
+                        <p>{{producto.videojuego.TITULO}}</p>
+                        <p>{{producto.videojuego.PRECIO}}</p>
+                        <div class="botones">
+                        <input (change)="actualizarCantidad(producto, producto.cantidad)" [(ngModel)]="producto.cantidad" type="number" >
+                        <button>Eliminar</button>
+                        </div>
+                        
+                    </div>
+    
+    
+    
+                    </td>
+                </tr>
+                <hr>
+            }
+            
+        </tbody>
+    </table>
+
+      <aside>
+        <h2> Subtotal: {{carrito.subtotal_venta}}$</h2>
+        <h2>Iva: {{carrito.iva}}$</h2>
+        <h2> Total: {{carrito.total_venta}}$</h2>
+        <button>Finalizar Compra</button>
+      </aside>
+
+</div>
+
+
+<div class="quantity-input">
+    <button class="quantity-btn decrement">-</button>
+    <input type="number" class="quantity" min="0" value="1">
+    <button class="quantity-btn increment">+</button>
+  </div>

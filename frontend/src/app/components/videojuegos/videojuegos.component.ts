@@ -3,10 +3,12 @@ import { VideojuegosService } from '../../services/videojuegos.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PlataformaService } from '../../services/plataforma.service';
+import { CarritoService } from '../../services/carrito.service';
+import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-videojuegos',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './videojuegos.component.html',
   styleUrl: './videojuegos.component.css'
 })
@@ -27,8 +29,13 @@ export class VideojuegosComponent implements OnInit {
     
   }
 
-  constructor(private videojuegos_service:VideojuegosService, private plataforma_service:PlataformaService){
+  constructor(private videojuegos_service:VideojuegosService, private plataforma_service:PlataformaService,
+    private carrito_service:CarritoService){
+    
+  }
 
+  agregarVideojuego(videojuego:any){
+    this.carrito_service.insertarProducto(videojuego,1);
   }
 
   obtenerVideojuegos(){
