@@ -81,49 +81,68 @@ async function createPlataforma (req, res){
     }
 }
 
-async function updatePlataforma (req, res){
-    const{id}=req.params;
-    const {nombre, descripcion, estado}= req.body;
-    const query= 'UPDATE PLATAFORMA SET nombre=:nombre, descripcion=:descripcion, estado=:estado WHERE id_plataforma=:id'
-    const values={id:id,nombre:nombre, descripcion:descripcion, estado:estado};
+async function updatePlataforma(req, res) {
+    const { id } = req.params;
+    const { nombre, descripcion, estado } = req.body;
+    const selectQuery = 'SELECT 1 FROM PLATAFORMA WHERE id_plataforma=:id FOR UPDATE';
+    const updateQuery = 'UPDATE PLATAFORMA SET nombre=:nombre, descripcion=:descripcion, estado=:estado WHERE id_plataforma=:id';
+    const values = { id: id, nombre: nombre, descripcion: descripcion, estado: estado };
+    let connection;
+    try {
+        connection = await oracledb.getConnection(dbConfig);
+        // Bloquear la fila seleccionada
+        await connection.execute(selectQuery, { id: id });
+        // Actualizar la fila
+        const result = await connection.execute(updateQuery, values, { autoCommit: true });
 
-    try{
-        const connection= await oracledb.getConnection(dbConfig);
-        const result= await connection.execute(query, values,{ autoCommit: true });
-        console.log(result);
-
-        await connection.close();
-
-        if(result.rowsAffected && result.rowsAffected==1){
+        if (result.rowsAffected && result.rowsAffected == 1) {
             res.status(200).json({ message: 'Se actualizó la plataforma' });
-        }
-        else{
+        } else {
             res.status(400).json({ message: 'No se actualizó la plataforma' });
         }
-    }catch(err){
-        res.status(500).json({error:"Error en el servidor"})
+    } catch (err) {
+        res.status(500).json({ error: "Error en el servidor" });
+    } finally {
+        if (connection) {
+            try {
+                await connection.close();
+            } catch (err) {
+                console.error(err);
+            }
+        }
     }
 }
 
-async function deletePlataforma(req, res){
-    const {id}=req.params;
-    const query= 'DELETE FROM plataforma where id_plataforma=:id'
-    const values= {id:id};
+async function deletePlataforma(req, res) {
+    const { id } = req.params;
+    const selectQuery = 'SELECT 1 FROM PLATAFORMA WHERE id_plataforma=:id FOR UPDATE';
+    const deleteQuery = 'DELETE FROM PLATAFORMA WHERE id_plataforma=:id';
+    const values = { id: id };
 
-    try{
-        const connection= await oracledb.getConnection(dbConfig);
-        const result= await connection.execute(query, values,{ autoCommit: true });
-        await connection.close();
-        res.status(200);
-        if (result.rowsAffected && result.rowsAffected==1){
-            res.status(200).json({ message: 'plataforma eliminada' });
-        }else{
-            res.status(500).json({ message: 'No existe la plataforma' });
+    let connection;
+
+    try {
+        connection = await oracledb.getConnection(dbConfig);
+        // Bloquear la fila seleccionada
+        await connection.execute(selectQuery, { id: id });
+        // Eliminar la fila
+        const result = await connection.execute(deleteQuery, values, { autoCommit: true });
+
+        if (result.rowsAffected && result.rowsAffected == 1) {
+            res.status(200).json({ message: 'Plataforma eliminada' });
+        } else {
+            res.status(400).json({ message: 'No existe la plataforma' });
         }
-
-    }catch(err){
+    } catch (err) {
         res.status(500).json({ error: "Error en el servidor" });
-
+    } finally {
+        if (connection) {
+            try {
+                await connection.close();
+            } catch (err) {
+                console.error(err);
+            }
+        }
     }
 }
 
