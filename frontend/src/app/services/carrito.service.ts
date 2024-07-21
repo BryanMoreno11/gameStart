@@ -46,13 +46,14 @@ insertarProducto(videojuego:any,cantidad:number){
   /*Buscamos en nuestro arreglo de productos un elemento que tenga el videojuego que se pasa como parámetro, en caso que no
   este simplemente se lo agrega*/
   let ob_producto=this.productos[this.obtenerPosicionProducto(producto)];
-  if(this.obtenerPosicionProducto(producto)==-1){
+  if(this.obtenerPosicionProducto(producto)==-1 ) {
     this.productos.push(producto);
     this.msgAlert("success","Producto agregado con éxito",1000,false);
   }
   /*En caso de que el videojuego ya se haya agregado, se verifica que la cantidad que tenía anteriormente sumada a la actual
   sea menor o igual al stock del producto*/
   else if(ob_producto.cantidad+cantidad<=videojuego.STOCK){
+    console.log("Producto agregado anteriormente");
     ob_producto.cantidad+=cantidad;
     ob_producto.precio_total= videojuego.PRECIO*ob_producto.cantidad;
     this.msgAlert("success","Producto agregado con éxito",1000,false);
@@ -147,6 +148,11 @@ efectuarCompra(){
 
 mensajeAlertaStock(producto:Producto){
   this.msgAlert("error",`No puedes añadir esa cantidad al carrito — tenemos ${producto.videojuego.STOCK} existencias`,10000,true);
+
+}
+
+mensajeAlertaStockVideojuego(videojuego:any){
+  this.msgAlert("error",`No puedes añadir esa cantidad al carrito — tenemos ${videojuego.STOCK} existencias`,10000,true);
 
 }
 
