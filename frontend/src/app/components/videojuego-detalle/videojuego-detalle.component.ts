@@ -35,6 +35,10 @@ export class VideojuegoDetalleComponent implements OnInit {
   }
  
   ngOnInit(): void {
+    //Esto es para que al regresar se recargue el componente y muestre el videojuego con el stock reducido
+    if (performance.navigation.type === 2) {
+      location.reload();
+    }
     window.scrollTo(0, 0);
     this.inicializarSwiperPrincipal();
     this.inicializarSwiperMiniatura();
