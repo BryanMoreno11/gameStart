@@ -10,7 +10,7 @@ import AdminVideojuegosComponent from './bussines/admin-videojuegos/admin-videoj
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,FooterComponent,LayoutComponent,DashboardComponent,SidebarComponent,AdminEmpleadosComponent,AdminPedidosComponent,AdminVideojuegosComponent],
+  imports: [RouterOutlet,FooterComponent,LayoutComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
