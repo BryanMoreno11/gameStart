@@ -54,10 +54,54 @@ async function createVentaDetalle (req, res){
     }
 }
 
+async function getVenta(req, res){
+    const {id}=req.params;
+    const query= 'SELECT * FROM vista_venta where id_venta=:id'
+    const values= {id:id};
 
+    try{
+        const connection= await oracledb.getConnection(dbConfig);
+        const result= await connection.execute(query, values, { outFormat: oracledb.OUT_FORMAT_OBJECT });
+        await connection.close();
+        res.status(200);
+        if (result.rows.length>0){
+            res.json(result.rows);
+        }else{
+            res.status(500).json({ message: 'No existe la venta' });
+        }
+
+    }catch(err){
+        res.status(500).json({ error: "Error en el servidor" });
+
+    }
+}
+
+async function getVentaDetalle(req, res){
+    const {id}=req.params;
+    const query= 'SELECT * FROM vista_venta_detalle where id_venta=:id'
+    const values= {id:id};
+
+    try{
+        const connection= await oracledb.getConnection(dbConfig);
+        const result= await connection.execute(query, values, { outFormat: oracledb.OUT_FORMAT_OBJECT });
+        await connection.close();
+        res.status(200);
+        if (result.rows.length>0){
+            res.json(result.rows);
+        }else{
+            res.status(500).json({ message: 'No existe la venta detalle' });
+        }
+
+    }catch(err){
+        res.status(500).json({ error: "Error en el servidor" });
+
+    }
+}
 
 
 module.exports = {
     createVenta,
-    createVentaDetalle
+    createVentaDetalle,
+    getVenta,
+    getVentaDetalle
 };
