@@ -88,45 +88,61 @@ export class CarritoComponent {
   }
 
   realizarCompra(){
-      Swal.fire({
-        title: "¿Estás seguro de proceder con la compra?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Sí, continuar",
-        cancelButtonText: "Cancelar"
-      }).then((result) => {
-        if (result.isConfirmed) {
-          //Setear datos para venta
-          this.carrito_service.efectuarCompra();
-          this.venta.id_cliente=this.id_cliente;
-          this.venta.subtotal=this.carrito.subtotal_venta;
-          this.venta.iva=this.carrito.iva;
-          this.venta.total_venta=this.carrito.total_venta;
-          //Llamada a la api
-          this.venta_service.insertVenta(this.venta).subscribe((res:any)=>{
-          console.log(res);
-          //Setear datos para Venta Detalle
-          this.venta_detalle.id_venta= res.id;
-          console.log("La id de la venta es",this.venta_detalle.id_venta);
-
-
-          
-            this.productos=this.carrito_service.productos;
+    Swal.fire({
+      title: "¿Estás seguro de proceder con la compra?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, continuar",
+      cancelButtonText: "Cancelar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        //Setear datos para venta
+        this.carrito_service.efectuarCompra();
+        this.venta.id_cliente=this.id_cliente;
+        this.venta.subtotal=this.carrito.subtotal_venta;
+        this.venta.iva=this.carrito.iva;
+        this.venta.total_venta=this.carrito.total_venta;
+        //Llamada a la api
+        this.venta_service.insertVenta(this.venta).subscribe((res:any)=>{
+        this.realizarVenta(res.id).then(
+          res=>{ this.productos=this.carrito_service.productos;
             this.carrito=this.carrito_service.carrito;
             Swal.fire({
               title: "¡Compra efectuada con éxito!",
               icon: "success"
-            });
-          })
+            });}
+        );
+        });
 
 
 
-         
-        }
-      });
-   }
+       
+      }
+    });
+ }
+
+ async realizarVenta(id_venta:number) {
+  try {
+      // Setear datos para Venta Detalle
+      this.venta_detalle.id_venta = id_venta;
+      // Crear una lista de promesas para las inserciones
+      let promesas = [];
+
+      for (let producto of this.productos) {
+          this.venta_detalle.id_videojuego_plataforma = producto.videojuego.ID_VIDEOJUEGO_PLATAFORMA;
+          this.venta_detalle.cantidad_vendida = producto.cantidad;
+          this.venta_detalle.importe = producto.precio_total;
+          // Añadir la promesa de inserción a la lista
+          promesas.push(this.venta_service.insertVentaDetalle(this.venta_detalle).toPromise());
+      }
+      // Esperar a que todas las promesas se completen
+      await Promise.all(promesas);
+  } catch (error) {
+      console.error('Error al insertar venta detalle:', error);
+  }
+}
 
 
 
