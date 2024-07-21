@@ -30,7 +30,6 @@ export class VideojuegoDetalleComponent implements OnInit {
   constructor(private videojuego_service:VideojuegosService, private activatedRoute:ActivatedRoute, private carrito_service:CarritoService){
     this.activatedRoute.params.subscribe(params=>{
       this.videojuegoId=params['id'];
-
     });
     
   }
@@ -40,12 +39,19 @@ export class VideojuegoDetalleComponent implements OnInit {
     this.inicializarSwiperPrincipal();
     this.inicializarSwiperMiniatura();
     //Obtener Videojuego
+   this.cargarVideojuego();
+  }
+
+
+  cargarVideojuego(){
     this.videojuego_service.getVideojuego(this.videojuegoId).subscribe(res=>{
       this.videojuego= res;
       this.videojuego=this.videojuego[0];
-      console.log("el videojuego es ", this.videojuego)
+      console.log("el videojuego es ", this.videojuego);
     })
   }
+
+ 
 
   //#region swipers
   inicializarSwiperMiniatura(){

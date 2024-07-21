@@ -19,7 +19,14 @@ export class VentaService {
     return this.http.post(`${this.API_URL}ventadetalle`,venta_detalle);
   }
 
+  getVenta(id_venta:number | string){
+    return this.http.get(`${this.API_URL}venta/${id_venta}`);
+  }
 
+  getVentaDetalle(id_venta:number | string){
+    return this.http.get(`${this.API_URL}ventadetalle/${id_venta}`);
+  }
+  
 }
 
 export interface Venta{

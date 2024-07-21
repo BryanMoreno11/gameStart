@@ -18,7 +18,7 @@ export class CarritoComponent {
   carrito:Carrito;
   //Atributos para insertar en la BD
   id_cliente:number;
-  id_venta:number=0;
+ 
   venta:Venta={
     id_cliente:0,
     total_venta:0,
@@ -31,6 +31,9 @@ export class CarritoComponent {
     cantidad_vendida:0,
     importe:0
   }
+  //Atributos para la factura
+  vistaVenta:any;
+  vistaVentaDetalle:any;
   //#region Métodos
   constructor(private carrito_service:CarritoService, private venta_service:VentaService) {
     this.productos=carrito_service.productos;
@@ -107,12 +110,29 @@ export class CarritoComponent {
         //Llamada a la api
         this.venta_service.insertVenta(this.venta).subscribe((res:any)=>{
         this.realizarVenta(res.id).then(
-          res=>{ this.productos=this.carrito_service.productos;
-            this.carrito=this.carrito_service.carrito;
-            Swal.fire({
-              title: "¡Compra efectuada con éxito!",
-              icon: "success"
-            });}
+          res=>{
+            //------------Obtención del objeto venta y arreglo de detalle venta
+            this.venta_service.getVenta(this.venta_detalle.id_venta).subscribe((res:any)=>{
+              this.vistaVenta=res[0];
+              console.log("La vista de la venta es ", this.vistaVenta);
+              this.venta_service.getVentaDetalle(this.venta_detalle.id_venta).subscribe((res:any)=>{
+                this.vistaVentaDetalle= res;
+                console.log("La vista de la venta detalle es ", this.vistaVentaDetalle);
+                //---Mensaje final
+              this.productos=this.carrito_service.productos;
+              this.carrito=this.carrito_service.carrito;
+              Swal.fire({
+                title: "¡Compra efectuada con éxito!",
+                text:"En su correo podrá ver la factura",
+                icon: "success"
+              });
+
+              });
+              
+            });
+
+
+          }
         );
         });
 
