@@ -106,9 +106,10 @@ export class CarritoComponent {
           this.venta.total_venta=this.carrito.total_venta;
           //Llamada a la api
           this.venta_service.insertVenta(this.venta).subscribe((res:any)=>{
+          console.log(res);
           //Setear datos para Venta Detalle
           this.venta_detalle.id_venta= res.id;
-            
+          console.log("La id de la venta es",this.venta_detalle.id_venta);
 
 
           
