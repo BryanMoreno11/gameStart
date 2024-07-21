@@ -3,6 +3,7 @@ import { CarritoService, Carrito, Producto } from '../../services/carrito.servic
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { RouterLink } from '@angular/router';
+import { Venta, VentaDetalle, VentaService } from '../../services/venta.service';
 
 @Component({
   selector: 'app-carrito',
@@ -15,11 +16,27 @@ export class CarritoComponent {
   //#region atributos
   productos:Producto[]=[];
   carrito:Carrito;
+  //Atributos para insertar en la BD
+  id_cliente:number;
+  id_venta:number=0;
+  venta:Venta={
+    id_cliente:0,
+    total_venta:0,
+    subtotal:0,
+    iva:0
+  }
+  venta_detalle:VentaDetalle={
+    id_venta:0,
+    id_videojuego_plataforma:0,
+    cantidad_vendida:0,
+    importe:0
+  }
   //#region Métodos
-  constructor(private carrito_service:CarritoService) {
+  constructor(private carrito_service:CarritoService, private venta_service:VentaService) {
     this.productos=carrito_service.productos;
     this.carrito=carrito_service.carrito;
     console.log(this.carrito.total_venta);
+    this.id_cliente=1;
   }
 
   actualizarCantidad(producto:any, cantidad:number){
@@ -81,13 +98,31 @@ export class CarritoComponent {
         cancelButtonText: "Cancelar"
       }).then((result) => {
         if (result.isConfirmed) {
+          //Setear datos para venta
           this.carrito_service.efectuarCompra();
-          this.productos=this.carrito_service.productos;
-          this.carrito=this.carrito_service.carrito;
-          Swal.fire({
-            title: "¡Compra efectuada con éxito!",
-            icon: "success"
-          });
+          this.venta.id_cliente=this.id_cliente;
+          this.venta.subtotal=this.carrito.subtotal_venta;
+          this.venta.iva=this.carrito.iva;
+          this.venta.total_venta=this.carrito.total_venta;
+          //Llamada a la api
+          this.venta_service.insertVenta(this.venta).subscribe((res:any)=>{
+          //Setear datos para Venta Detalle
+          this.venta_detalle.id_venta= res.id;
+            
+
+
+          
+            this.productos=this.carrito_service.productos;
+            this.carrito=this.carrito_service.carrito;
+            Swal.fire({
+              title: "¡Compra efectuada con éxito!",
+              icon: "success"
+            });
+          })
+
+
+
+         
         }
       });
    }

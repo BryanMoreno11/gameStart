@@ -30,11 +30,12 @@ async function createVenta(req, res) {
 }
 
 async function createVentaDetalle (req, res){
-    const {id_venta, id_videojuego_plataforma, cantidad_vendida}= req.body;
-    const query= 'INSERT INTO VENTA_DETALLE (id_venta, id_videojuego_plataforma, cantidad_vendida) VALUES (:id_venta,:id_videojuego_plataforma,:cantidad_vendida)'
+    const {id_venta, id_videojuego_plataforma, cantidad_vendida, importe}= req.body;
+    const query= 'INSERT INTO VENTA_DETALLE (id_venta, id_videojuego_plataforma, cantidad_vendida, importe) VALUES (:id_venta,:id_videojuego_plataforma,:cantidad_vendida, :importe)'
     const values={id_venta:id_venta, 
         id_videojuego_plataforma:id_videojuego_plataforma,
-         cantidad_vendida:cantidad_vendida};
+         cantidad_vendida:cantidad_vendida,
+        importe:importe};
 
     try{
         const connection= await oracledb.getConnection(dbConfig);

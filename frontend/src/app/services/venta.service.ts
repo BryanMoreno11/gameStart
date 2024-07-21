@@ -15,6 +15,10 @@ export class VentaService {
     return this.http.post(`${this.API_URL}venta`,venta);
   }
 
+  insertVentaDetalle(venta_detalle:VentaDetalle){
+    return this.http.post(`${this.API_URL}ventadetalle`,venta_detalle);
+  }
+
 
 }
 
@@ -29,6 +33,5 @@ export interface VentaDetalle{
   id_venta:number | string;
   id_videojuego_plataforma:number | string;
   cantidad_vendida:number;
-  subtotal:number;
-  iva:number;
+  importe:number;
 }
