@@ -4,11 +4,13 @@ import {SwiperContainer} from 'swiper/element/bundle';
 import {SwiperOptions} from 'swiper/types';
 import { ActivatedRoute } from '@angular/router';
 import { VideojuegosService } from '../../services/videojuegos.service';
+import { FormsModule } from '@angular/forms';
+import { CarritoService } from '../../services/carrito.service';
 
 @Component({
   selector: 'app-videojuego-detalle',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './videojuego-detalle.component.html',
   styleUrl: './videojuego-detalle.component.css',
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
@@ -18,31 +20,42 @@ export class VideojuegoDetalleComponent implements OnInit {
   //-------------------------------------------atributos--------------------------------------------
   videojuego:any;
   videojuegoId:number=0;
+  cantidad:number=1;
     //swipers
     swiperPrincipal=signal<SwiperContainer|null>(null);
     swiperMiniatura=signal<SwiperContainer|null>(null);
     zoomActivado:Boolean=false;
   //----------------------------------------Métodos-----------------------------------------------
  
-  constructor(private videojuego_service:VideojuegosService, private activatedRoute:ActivatedRoute){
+  constructor(private videojuego_service:VideojuegosService, private activatedRoute:ActivatedRoute, private carrito_service:CarritoService){
     this.activatedRoute.params.subscribe(params=>{
       this.videojuegoId=params['id'];
-
     });
     
   }
  
   ngOnInit(): void {
+    //Esto es para que al regresar se recargue el componente y muestre el videojuego con el stock reducido
+    if (performance.navigation.type === 2) {
+      location.reload();
+    }
     window.scrollTo(0, 0);
     this.inicializarSwiperPrincipal();
     this.inicializarSwiperMiniatura();
     //Obtener Videojuego
+   this.cargarVideojuego();
+  }
+
+
+  cargarVideojuego(){
     this.videojuego_service.getVideojuego(this.videojuegoId).subscribe(res=>{
       this.videojuego= res;
       this.videojuego=this.videojuego[0];
-      console.log("el videojuego es ", this.videojuego)
+      console.log("el videojuego es ", this.videojuego);
     })
   }
+
+ 
 
   //#region swipers
   inicializarSwiperMiniatura(){
@@ -129,6 +142,32 @@ export class VideojuegoDetalleComponent implements OnInit {
     }
     else{
       this.zoomOut(imagen);
+    }
+  }
+
+  //#region metodos_compra
+  incrementar(){
+    console.log("incremento")
+    this.cantidad++;
+  }
+  decrementar(){
+    if(this.cantidad>1){
+      this.cantidad--;
+    }
+  }
+
+  changeCantidad(){
+    if(this.cantidad<1){
+      this.cantidad=1;
+    }
+  }
+
+  agregarProductoCarrito(videojuego:any){
+    if(this.cantidad<=videojuego.STOCK){
+      this.carrito_service.insertarProducto(videojuego,this.cantidad);
+
+    }else{
+      this.carrito_service.mensajeAlertaStockVideojuego(videojuego);
     }
   }
 }
