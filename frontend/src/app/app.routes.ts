@@ -5,6 +5,7 @@ import { LoginUserComponent } from './components/login-user/login-user.component
 import { RegisterUserComponent } from './components/register-user/register-user.component';
 import { VerificacionTokenComponent } from './components/verificacion-token/verificacion-token.component';
 import { AuthenticateQrComponent } from './components/authenticate-qr/authenticate-qr.component';
+import { QuienesSomosComponent } from './components/quienes-somos/quienes-somos.component';
 
 export const routes: Routes = [
     {path:'inicio', component:InicioComponent},
@@ -13,5 +14,6 @@ export const routes: Routes = [
     {path: 'register', component: RegisterUserComponent},
     {path: 'token-verify', component: VerificacionTokenComponent},
     {path: 'qr-verify',component: AuthenticateQrComponent},
+    {path: 'quienes-somos',component: QuienesSomosComponent},
     {path:"**", pathMatch:"full", redirectTo:"inicio"}
 ];

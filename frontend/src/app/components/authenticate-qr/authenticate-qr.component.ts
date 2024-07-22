@@ -4,6 +4,7 @@ import { OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common'
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-authenticate-qr',
@@ -16,7 +17,7 @@ export class AuthenticateQrComponent implements OnInit {
   qrCodeUrl: string |  null = null;
   errorMessage: string | null = null;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) { }
+  constructor(private route: ActivatedRoute, private http: HttpClient, private router:Router) { }
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
@@ -39,5 +40,9 @@ export class AuthenticateQrComponent implements OnInit {
         this.errorMessage = 'Ocurrió un error al generar el código QR.';
       }
     );
+  }
+
+  toLogin(){
+    this.router.navigate(['/login']);
   }
 }

@@ -1,9 +1,12 @@
 /*Estilos generales*/
+
 main {
     margin: auto 15px;
 }
 
+
 /*Swiper Principal*/
+
 .swiper-principal {
     margin: 0 0;
     padding: 0 0;
@@ -12,12 +15,12 @@ main {
 .swiper-principal swiper-slide img {
     width: 100%;
     height: 100%;
-
 }
 
 .swiper-principal:hover {
     cursor: pointer;
 }
+
 
 /*Swiper Videojuegos*/
 
@@ -31,8 +34,6 @@ main {
     height: auto;
     width: auto;
     margin-bottom: 40px;
-
-
 }
 
 swiper-slide:hover {
@@ -41,23 +42,17 @@ swiper-slide:hover {
 
 .card {
     height: 100%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1),
-        0 2px 4px rgba(0, 0, 0, 0.06);
-
-
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
 }
 
 .swiper-videojuegos img {
-
     width: 100%;
     height: 100%;
 }
 
-
 .content {
     display: flex;
     flex-direction: column;
-
 }
 
 .content>* {
@@ -72,17 +67,17 @@ swiper-slide:hover {
     font-weight: bold;
 }
 
+
 /*Media Queries*/
+
 @media(width<768px) {
     .swiper-principal {
         height: 130px;
     }
-
     .content {
         align-items: center;
         margin-bottom: 20px;
     }
-
     main {
         text-align: center;
     }
