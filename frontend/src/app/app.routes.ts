@@ -16,5 +16,7 @@ export const routes: Routes = [
     {path: 'register', component: RegisterUserComponent},
     {path: 'token-verify', component: VerificacionTokenComponent},
     {path: 'qr-verify',component: AuthenticateQrComponent},
+    {path:'videojuegos', component:VideojuegosComponent},
+    {path:'carrito', component:CarritoComponent},
     {path:"**", pathMatch:"full", redirectTo:"inicio"}
 ];
