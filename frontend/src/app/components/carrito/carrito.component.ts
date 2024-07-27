@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { RouterLink } from '@angular/router';
 import { Venta, VentaDetalle, VentaService } from '../../services/venta.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-carrito',
@@ -35,11 +36,11 @@ export class CarritoComponent {
   vistaVenta:any;
   vistaVentaDetalle:any;
   //#region Métodos
-  constructor(private carrito_service:CarritoService, private venta_service:VentaService) {
+  constructor(private carrito_service:CarritoService, private venta_service:VentaService,private httpclien:HttpClient) {
     this.productos=carrito_service.productos;
     this.carrito=carrito_service.carrito;
     console.log(this.carrito.total_venta);
-    this.id_cliente=1;
+    this.id_cliente=23;
   }
 
   actualizarCantidad(producto:any, cantidad:number){
@@ -121,14 +122,13 @@ export class CarritoComponent {
                 //---Mensaje final
               this.productos=this.carrito_service.productos;
               this.carrito=this.carrito_service.carrito;
+              this.enviarCorreoCliente();
               Swal.fire({
                 title: "¡Compra efectuada con éxito!",
                 text:"En su correo podrá ver la factura",
                 icon: "success"
               });
-
               });
-              
             });
 
 
@@ -164,7 +164,25 @@ export class CarritoComponent {
   }
 }
 
-
+enviarCorreoCliente(){
+  console.log("Enviando correo...");
+  let params = {
+    cedula: this.vistaVenta.CEDULA,
+    nombre: this.vistaVenta.NOMBRE_CLIENTE,
+    correo: this.vistaVenta.CORREO,
+    fecha_venta: this.vistaVenta.FECHA_VENTA,
+    cod_venta: this.vistaVenta.CODIGO_VENTA,
+    subtotal: this.vistaVenta.SUBTOTAL,
+    iva: this.vistaVenta.IVA,
+    total_venta: this.vistaVenta.TOTAL_VENTA,
+    productos: this.vistaVentaDetalle,
+    id_venta: this.vistaVenta.ID_VENTA,
+    ciudad: this.vistaVenta.CIUDAD,
+  }
+  this.httpclien.post('http://localhost:3000/api/correo/',params).subscribe(resp=>{
+  console.log(resp);
+  });
+}
 
 
 }
