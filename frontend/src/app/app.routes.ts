@@ -13,6 +13,8 @@ import AdminEmpleadosComponent from './bussines/admin-empleados/admin-empleados.
 import AdminPedidosComponent from './bussines/admin-pedidos/admin-pedidos.component';
 import AdminVideojuegosComponent from './bussines/admin-videojuegos/admin-videojuegos.component';
 import { QuienesSomosComponent } from './components/quienes-somos/quienes-somos.component';
+import { LoginClientComponent } from './components/login-client/login-client.component';
+import { RegisterClientComponent } from './components/register-client/register-client.component';
 
 export const routes: Routes = [
   { path: 'inicio', component: InicioComponent },
@@ -21,8 +23,10 @@ export const routes: Routes = [
     {path: 'register', component: RegisterUserComponent},
     {path: 'token-verify', component: VerificacionTokenComponent},
     {path: 'qr-verify',component: AuthenticateQrComponent},
-  { path: 'videojuegos', component: VideojuegosComponent },
-  { path: 'carrito', component: CarritoComponent },
+    { path: 'videojuegos', component: VideojuegosComponent },
+    { path: 'carrito', component: CarritoComponent },
+    { path: 'login-client', component: LoginClientComponent },
+    { path: 'register-client', component: RegisterClientComponent },
   {
     path: 'dashboard',
     component: LayoutComponent,

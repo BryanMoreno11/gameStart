@@ -40,7 +40,7 @@ export class CarritoComponent {
     this.productos=carrito_service.productos;
     this.carrito=carrito_service.carrito;
     console.log(this.carrito.total_venta);
-    this.id_cliente=23;
+    this.id_cliente= Number(localStorage.getItem('id_cliente'));
   }
 
   actualizarCantidad(producto:any, cantidad:number){

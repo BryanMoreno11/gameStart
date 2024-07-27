@@ -12,12 +12,14 @@ const usuariosRoutes = require('./routes/usuariosRoutes');
 const verifyRoutes = require('./routes/verifyRoutes');
 const ventaRoutes = require('./routes/ventaRoutes');
 const correoRoutes = require('./routes/correoRoutes');
+const clientesRoutes = require('./routes/clientesRoutes');
 app.use('/api', plataformaRoutes);
 app.use('/api', videojuegoRoutes);
 app.use('/api', usuariosRoutes);
 app.use('/api', verifyRoutes);
 app.use('/api', ventaRoutes);
 app.use('/api', correoRoutes);
+app.use('/api', clientesRoutes);
 //Inicio del proyecto
 app.listen("3000");
 console.log("server up localhost:3000");
