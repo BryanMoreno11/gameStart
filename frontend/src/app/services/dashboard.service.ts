@@ -19,4 +19,34 @@ export class DashboardService {
   getVideojuegosRecaudacion(){
     return this.http.get(`${this.API_URL}dashboard/videojuegosrecaudacion`);
   }
+
+  getGenerosVentas(){
+    return this.http.get(`${this.API_URL}dashboard/generosventas`);
+  }
+
+  getGenerosRecaudacion(){
+    return this.http.get(`${this.API_URL}dashboard/generosrecaudacion`);
+
+  }
+
+  getPlataformasVentas(){
+    return this.http.get(`${this.API_URL}dashboard/plataformasventas`);
+
+  }
+
+  getPlataformasRecaudacion(){
+    return this.http.get(`${this.API_URL}dashboard/plataformasrecaudacion`);
+
+  }
+
+  getCantidadProveedor(){
+    return this.http.get(`${this.API_URL}dashboard/cantidadproveedor`);
+
+  }
+
+  getRecaudacionProveedor(){
+    return this.http.get(`${this.API_URL}dashboard/recaudacionproveedor`);
+
+  }
+
 }

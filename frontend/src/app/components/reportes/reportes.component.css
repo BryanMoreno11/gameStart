@@ -1,0 +1,25 @@
+.container{
+    padding-top: 30px;
+}
+.videojuegos{
+    overflow-x: scroll;
+}
+
+.row{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.row h1{
+    text-align: center;
+}
+
+
+@media(width<=768px){
+    .row{
+        grid-template-columns: 1fr;
+    }
+
+}
+    
