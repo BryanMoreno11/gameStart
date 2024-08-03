@@ -22,6 +22,7 @@ export class LoginClientComponent {
     this.clientesusuarios.getClienteLogin(this.nombre, this.contrasenia).subscribe(
       res => {
         localStorage.setItem('id_cliente', res.id_cliente);
+        localStorage.setItem('loginUsuario', 'true');
         if(res.succes){
           Swal.fire({
             title: 'Login exitoso',

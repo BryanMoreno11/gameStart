@@ -46,9 +46,11 @@ async function getClienteNombre(req, res) {
 }
 
 async function getClienteLogin(req, res) {
-    const { nombre, contrasenia } = req.body;
-    const query = 'SELECT * FROM cliente where nombre=:nombre'
-    const values = { nombre: nombre };
+    console.log("Buscando cliente...");
+    const { correo, contrasenia } = req.body;
+    console.log("contrasenia: " + contrasenia + " correo: " + correo);
+    const query = 'SELECT * FROM cliente where correo=:correo'
+    const values = { correo: correo };
     try {
         const connection = await oracledb.getConnection(dbConfig);
         const result = await connection.execute(query, values, { outFormat: oracledb.OUT_FORMAT_OBJECT });

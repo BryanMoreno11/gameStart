@@ -3,17 +3,17 @@ import { Router } from '@angular/router';
 import { Cliente, ClientesService } from '../../services/clientes.service';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-register-client',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './register-client.component.html',
   styleUrl: './register-client.component.css'
 })
 export class RegisterClientComponent {
-  
 
    cliente: Cliente = {
     id_ciudad: '',
@@ -26,9 +26,23 @@ export class RegisterClientComponent {
     contrasenia: '',
   }
 
+  ciudades: any = [];
+
+
   constructor(private http:HttpClient, private clientesServices:ClientesService, private router:Router) {}
 
+  ngOnInit(  ): void {
+    this.http.get<any>(`http://localhost:3000/api/ciudades`).subscribe(
+      res => {
+        this.ciudades = res;
+        console.log(this.ciudades);
+      }
+    );
+  }
+
+
   insertarCliente() {
+    console.log(this.cliente);
     this.clientesServices.insertarCliente(this.cliente).subscribe(res => {
       console.log(res);
       if (res.message) {

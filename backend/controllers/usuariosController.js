@@ -28,7 +28,7 @@ async function getUsuario(req, res) {
 async function getUsuarioNombre(req, res) {
     console.log('Entra al getUsuarioNombre');
     const { nombre } = req.params;
-    const query = 'SELECT * FROM usuario where nombre=:nombre'
+    const query = 'SELECT * FROM usuario where correo=:nombre'
     const values = { nombre: nombre };
     try {
         const connection = await oracledb.getConnection(dbConfig);
@@ -47,11 +47,9 @@ async function getUsuarioNombre(req, res) {
 }
 
 async function getUsuarioLogin(req, res) {
-    const { nombre, contrasenia } = req.body;
-    const query = 'SELECT * FROM usuario where nombre=:nombre'
-    const values = { nombre: nombre };
-    console.log(nombre);
-    console.log(contrasenia);
+    const { correo, contrasenia } = req.body;
+    const query = 'SELECT * FROM usuario where correo=:correo'
+    const values = { correo: correo };
     try {
         const connection = await oracledb.getConnection(dbConfig);
         const result = await connection.execute(query, values, { outFormat: oracledb.OUT_FORMAT_OBJECT });

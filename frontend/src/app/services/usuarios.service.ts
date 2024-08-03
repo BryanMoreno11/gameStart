@@ -18,8 +18,8 @@ API_URL='http://localhost:3000/api/';
   }
 
   
-  getUsuarioLogin(nombre:string, contrasenia:string):Observable<any>{
-    return this.http.post(`${this.API_URL}usuario/login`, {nombre, contrasenia});
+  getUsuarioLogin(correo:string, contrasenia:string):Observable<any>{
+    return this.http.post(`${this.API_URL}usuario/login`, {correo, contrasenia});
   }
 
   insertarUsuario(usuario:Usuario):Observable<any>{

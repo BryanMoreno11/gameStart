@@ -17,8 +17,8 @@ export class ClientesService {
   }
   
   
-  getClienteLogin(nombre:string, contrasenia:string):Observable<any>{
-    return this.http.post(`${this.API_URL}cliente/login`, {nombre, contrasenia});
+  getClienteLogin(correo:string, contrasenia:string):Observable<any>{
+    return this.http.post(`${this.API_URL}cliente/login`, {correo, contrasenia});
   }
   
   insertarCliente(cliente:Cliente):Observable<any>{

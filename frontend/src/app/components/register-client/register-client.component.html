@@ -14,8 +14,13 @@
         <h1>Registro de Cliente</h1>
         <form (ngSubmit)="insertarCliente()" #clienteForm="ngForm">
             <div class="username">
-                <input type="text" required [(ngModel)]="cliente.id_ciudad" name="id_ciudad">
-                <label>ID Ciudad</label>
+                <select required [(ngModel)]="cliente.id_ciudad" name="id_ciudad">
+                    <option value="" disabled selected>Seleccione una ciudad</option>
+                    <option *ngFor="let ciudad of ciudades" [value]="ciudad.ID_CIUDAD">{{ciudad.NOMBRE}}</option>
+                </select>
+                <div class="aux-label">
+                    <label>Ciudad</label>
+                </div>
             </div>
             <div class="username">
                 <input type="text" required [(ngModel)]="cliente.cedula" name="cedula">
