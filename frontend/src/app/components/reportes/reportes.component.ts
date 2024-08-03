@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {Chart, registerables} from 'chart.js'
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { DashboardService } from '../../services/dashboard.service';
+import jsPDF from 'jspdf';
+
 Chart.register(...registerables);
 Chart.register(ChartDataLabels);
 Chart.defaults.set('plugins.datalabels', {
@@ -96,6 +98,29 @@ ngOnInit():void{
   );
 
 
+}
+
+saveAsPDF() {
+ 
+  let index = 1;
+  let pdf = new jsPDF({
+      orientation: 'landscape',
+      unit: 'px',
+      format: 'a4',
+      compress: true,
+  })
+  const canvas = document.querySelectorAll("canvas");
+  let pageWidth = 400;
+  let pageHeight = 400;
+  index = 1;
+  canvas.forEach((canva) => {
+      pdf.addImage(canva, 'PNG', 10, 10, pageWidth, pageHeight, `img${index}`, "FAST");
+      if (index < canvas.length) {
+          pdf.addPage();
+      }
+      index++;
+  });
+  pdf.save('Reporte.pdf');
 }
 
 //#region graficos
@@ -268,6 +293,10 @@ graficoGeneroVentas(){
     },
     options: {     
       plugins: {    
+        title: {
+          display: true,
+          text: 'Porcentaje de Ventas por Género'
+      },
         datalabels: {
           formatter: (value, ctx) => {
 
@@ -317,6 +346,10 @@ graficoGeneroRecaudacion(){
     },
     options: {     
       plugins: {    
+        title: {
+          display: true,
+          text: 'Porcentaje de Recaudación por Género'
+      },
         datalabels: {
           formatter: (value, ctx) => {
 
