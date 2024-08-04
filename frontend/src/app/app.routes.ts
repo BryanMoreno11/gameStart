@@ -30,7 +30,7 @@ export const routes: Routes = [
     { path: 'login-client', component: LoginClientComponent },
     { path: 'register-client', component: RegisterClientComponent },
   {
-    path: '',
+    path: 'admin',
     component: LayoutComponent,
     children: [
       { path: 'dashboard', component: DashboardComponent },

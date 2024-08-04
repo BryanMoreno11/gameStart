@@ -2,6 +2,8 @@ import { Component,OnInit, OnDestroy } from '@angular/core';
 import SidebarComponent from '../sidebar/sidebar.component';
 import { RouterOutlet } from '@angular/router';
 import { LayoutService } from '../../../services/layout.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-layout',
@@ -13,9 +15,13 @@ import { LayoutService } from '../../../services/layout.service';
 export default class LayoutComponent implements OnInit, OnDestroy {
   isSidebarOpen = false;
 
-  constructor(private layoutService: LayoutService) { }
+  constructor(private layoutService: LayoutService, private router:Router) { }
 
   ngOnInit() {
+    const valor = localStorage.getItem('loginAdmin') === 'true';
+    if (!valor) {
+      this.router.navigate(['/inicio']);
+    }
     this.layoutService.setLayout(false);
   }
 

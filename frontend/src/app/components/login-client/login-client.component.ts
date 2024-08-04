@@ -21,17 +21,21 @@ export class LoginClientComponent {
   getUsuario(){
     this.clientesusuarios.getClienteLogin(this.nombre, this.contrasenia).subscribe(
       res => {
+        localStorage.setItem('nombre_cliente', res.nombre);
         localStorage.setItem('id_cliente', res.id_cliente);
         localStorage.setItem('loginUsuario', 'true');
+        console.log(localStorage.getItem('nombre_cliente'));
         if(res.succes){
           Swal.fire({
             title: 'Login exitoso',
             text: 'Has iniciado sesion',
             icon: 'success'
-          })
+          }).then(() => {
+            this.router.navigate(['/inicio']).then(() => {
+              window.location.reload();
+            });
+          });
         }
-        console.log(res);
-        this.router.navigate(['/']);
       },
       err => {
         Swal.fire({
@@ -41,5 +45,9 @@ export class LoginClientComponent {
         })
       }
     )
+  }
+
+  goToRegister(){
+    this.router.navigate(['/register-client']);
   }
 }

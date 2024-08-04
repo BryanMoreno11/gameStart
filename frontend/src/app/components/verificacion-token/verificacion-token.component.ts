@@ -51,7 +51,8 @@ getSecret(nombre: string) {
           text: 'Has iniciado sesion',
           icon: 'success'
         })
-        this.router.navigate(['/dashboard']);
+        localStorage.setItem('loginAdmin', 'true');
+        this.router.navigate(['/admin/dashboard']);
       },
       error => {
         console.error('Error en la verificación del token:', error);

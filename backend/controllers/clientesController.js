@@ -60,7 +60,7 @@ async function getClienteLogin(req, res) {
             const user = result.rows[0];
             const passwordMatch = await compare(contrasenia, user.CONTRASENIA);
             if (passwordMatch) {
-                res.status(200).json({ succes: true, message: 'Login exitoso', id_cliente: user.ID_CLIENTE });
+                res.status(200).json({ succes: true, message: 'Login exitoso', id_cliente: user.ID_CLIENTE, nombre: user.NOMBRE });
             } else {
                 res.status(401).json({ message: 'Nombre de usuario o contrasenia incorrecto' });
             }

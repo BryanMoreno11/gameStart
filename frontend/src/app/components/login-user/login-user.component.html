@@ -11,7 +11,7 @@
                 <img src="../../../assets/default_transparent_765x625.png" alt="No pudo cargar">
             </a>
         </div>
-        <h1>Inicio de Sesion</h1>
+        <h1>Inicio de Sesion - Administrador</h1>
         <form (ngSubmit)="getUsuario()" #usuarioForm="ngForm">
             <div class="username">
                 <input type="text" required [(ngModel)]="nombre" name="nombre">
@@ -21,11 +21,7 @@
                 <input type="password" required [(ngModel)]="contrasenia" name="contrasenia">
                 <label>Contraseña</label>
             </div>
-            <div class="recordar">¿Olvidaste tu contraseña?</div>
             <input type="submit" value="Iniciar">
-            <div class="registrarse">
-                No tienes cuenta? <a href="#">registrate!</a>
-            </div>
         </form>
     </div>
 

@@ -21,10 +21,9 @@
                 <input type="password" required [(ngModel)]="contrasenia" name="contrasenia">
                 <label>Contraseña</label>
             </div>
-            <div class="recordar">¿Olvidaste tu contraseña?</div>
             <input type="submit" value="Iniciar">
             <div class="registrarse">
-                No tienes cuenta? <a href="#">registrate!</a>
+                No tienes cuenta? <a (click)="goToRegister()">registrate!</a>
             </div>
         </form>
     </div>
