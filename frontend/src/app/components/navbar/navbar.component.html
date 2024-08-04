@@ -1,0 +1,13 @@
+<nav class="navbar">
+    <a class="navbar-brand" routerLink="/inicio" routerLinkActive="active">GameStart</a>
+    <div class="navbar-toggle" (click)="toggleNavbar()">
+      &#9776;
+    </div>
+    <div class="navbar-links" [ngClass]="{'active': navbarOpen}">
+      <a routerLink="/videojuegos" routerLinkActive="active">Videojuegos</a>
+      <a routerLink="/carrito" routerLinkActive="active">Carrito</a>
+      <a routerLink="/inicio-sesion" routerLinkActive="active">Inicio de sesión</a>
+    </div>
+  </nav>
+  
+  

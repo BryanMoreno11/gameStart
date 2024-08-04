@@ -18,7 +18,7 @@ export const routes: Routes = [
     path: 'dashboard',
     component: LayoutComponent,
     children: [
-      { path: '', component: DashboardComponent },
+      { path: 'dashboard', component: DashboardComponent },
       { path: 'empleados', component: AdminEmpleadosComponent },
       { path: 'pedidos', component: AdminPedidosComponent },
       { path: 'video', component: AdminVideojuegosComponent }

@@ -1,92 +1,40 @@
 .layout-container {
-    display: flex;
-    height: 100vh; /* Altura completa de la ventana del navegador */
-  }
-  
-  app-sidebar {
-    width: 250px; /* Ancho del sidebar */
-    height: 100vh; /* Altura completa */
-    background-color: #2c3e50; /* Color de fondo del sidebar */
-    color: white;
-    position: fixed;
-    top: 0;
-    left: 0;
-    overflow-y: auto;
-    box-shadow: 4px 0 12px rgba(0, 0, 0, 0.3); /* Sombreado más pronunciado */
-    border-top-right-radius: 15px; /* Bordes redondeados en la parte superior derecha */
-    border-bottom-right-radius: 15px; /* Bordes redondeados en la parte inferior derecha */
-    border: 1px solid #2c3e50; /* Borde sutil para dar más definición */
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .logo-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100px; /* Altura del área del logo */
-    border-bottom: 2px solid #2c3e50; /* Línea separadora más visible */
-    background-color: #367cc2; /* Fondo igual al color del borde */
-    border-top-right-radius: 15px; /* Bordes redondeados en la parte superior derecha */
-    border-top-left-radius: 15px; /* Bordes redondeados en la parte superior izquierda */
-  }
-  
-  .logo-icon {
-    font-size: 3rem; /* Tamaño grande del icono */
-    color: #ecf0f1; /* Color claro para el icono */
-  }
-  
-  nav {
-    display: flex;
-    flex-direction: column;
-    flex: 1; /* Ocupa el espacio restante */
-    padding: 10px 0; /* Espacio alrededor del menú de navegación */
-  }
-  
-  nav ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  nav ul li {
-    border-bottom: 1px solid #2c3e50; /* Línea separadora entre los botones */
-  }
-  
-  nav ul li a {
-    display: flex;
-    align-items: center;
-    padding: 15px;
-    text-decoration: none;
-    color: #ecf0f1; /* Color del texto de los botones */
-    transition: background-color 0.3s, padding-left 0.3s; /* Transiciones suaves */
-    border-radius: 10px; /* Bordes redondeados en los botones */
-  }
-  
-  nav ul li a i {
-    margin-right: 15px; /* Espacio entre el icono y el texto */
-    font-size: 1.4rem; /* Tamaño de los iconos */
-  }
-  
-  nav ul li a:hover {
-    background-color: #2c3e50; /* Color de fondo al pasar el ratón */
-    padding-left: 25px; /* Efecto de desplazamiento suave */
-  }
-  
-  nav ul li a.active {
-    background-color: #1abc9c; /* Color de fondo para el botón activo */
-    color: #fff; /* Color del texto del botón activo */
-  }
-  
+  display: flex;
+  height: 100vh; /* Altura completa de la ventana del navegador */
+}
+
+.main-content {
+  margin-left: 250px; /* Ajusta según el ancho del sidebar */
+  padding: 20px;
+  flex: 1;
+  background-color: #f4f4f4;
+  height: 100vh;
+  overflow-y: auto;
+  border-top-left-radius: 15px; /* Bordes redondeados en la parte superior izquierda del contenido */
+  border-bottom-left-radius: 15px; /* Bordes redondeados en la parte inferior izquierda del contenido */
+  box-shadow: inset 4px 0 12px rgba(0, 0, 0, 0.1); /* Sombreado interno para el contenido */
+}
+
+.hamburger-menu {
+  display: none;
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  background-color: #1F2937;
+  color: #ecf0f1;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+/* Media queries for responsive design */
+@media (max-width: 768px) {
   .main-content {
-    margin-left: 250px; /* Ajusta según el ancho del sidebar */
-    padding: 20px;
-    flex: 1;
-    background-color: #f4f4f4;
-    height: 100vh;
-    overflow-y: auto;
-    border-top-left-radius: 15px; /* Bordes redondeados en la parte superior izquierda del contenido */
-    border-bottom-left-radius: 15px; /* Bordes redondeados en la parte inferior izquierda del contenido */
-    box-shadow: inset 4px 0 12px rgba(0, 0, 0, 0.1); /* Sombreado interno para el contenido */
+    margin-left: 0;
   }
-  
+
+  .hamburger-menu {
+    display: block;
+  }
+}
