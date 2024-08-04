@@ -7,6 +7,7 @@ import { VerificacionTokenComponent } from './components/verificacion-token/veri
 import { AuthenticateQrComponent } from './components/authenticate-qr/authenticate-qr.component';
 import { VideojuegosComponent } from './components/videojuegos/videojuegos.component';
 import { CarritoComponent } from './components/carrito/carrito.component';
+import { ReportesComponent } from './components/reportes/reportes.component';
 
 export const routes: Routes = [
     {path:'inicio', component:InicioComponent},
@@ -17,5 +18,6 @@ export const routes: Routes = [
     {path: 'qr-verify',component: AuthenticateQrComponent},
     {path:'videojuegos', component:VideojuegosComponent},
     {path:'carrito', component:CarritoComponent},
+    {path:'reportes', component:ReportesComponent},
     {path:"**", pathMatch:"full", redirectTo:"inicio"}
 ];
