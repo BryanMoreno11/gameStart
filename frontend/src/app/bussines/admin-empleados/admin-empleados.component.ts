@@ -32,6 +32,14 @@ export default class AdminEmpleadosComponent implements OnInit {
   getEmpleados(): void {
     this.empleadoService.getEmpleados().subscribe(empleados => {
       this.empleados = empleados;
+      this.empleados.map(empleado=>{
+        let ob = Object.assign(empleado)
+        let fecha = new Date(empleado.fecha_nacimiento);
+        fecha.setMinutes(fecha.getMinutes() + fecha.getTimezoneOffset());
+        ob.fecha_nacimiento = fecha
+        return ob;
+      })
+      console.log("Los  empleados que se obtienen son", empleados)
     });
   }
 
