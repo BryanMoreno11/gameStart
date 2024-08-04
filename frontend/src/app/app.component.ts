@@ -5,11 +5,12 @@ import LayoutComponent from './shared/components/layout/layout.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { CommonModule } from '@angular/common';
 import { LayoutService } from './services/layout.service'; 
+import { FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,FooterComponent,LayoutComponent,NavbarComponent,CommonModule],
+  imports: [RouterOutlet,FooterComponent,LayoutComponent,NavbarComponent,CommonModule,FormsModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
