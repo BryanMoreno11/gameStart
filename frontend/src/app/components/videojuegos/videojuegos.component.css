@@ -1,6 +1,7 @@
 /*Estilos generales para el componente*/
 .container{
     margin-top: 30px;
+    margin-left: 15px;
     display: flex;
     flex-direction: column;
 }

@@ -10,6 +10,8 @@
     grid-template-columns: 60% 1fr;
     gap: 30px;
     margin:  auto 20px;
+    margin-top: 20px;
+
  }
 
  .detalles>*{
