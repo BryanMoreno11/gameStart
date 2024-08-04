@@ -49,8 +49,8 @@ export class DashboardService {
 
   }
 
-  getTablas(){
-    return this.http.get(`${this.API_URL}dashboard/tablas`);
+  getTablas(tabla:Tabla){
+    return this.http.post(`${this.API_URL}dashboard/tablas`,tabla);
 
   }
 
@@ -61,6 +61,11 @@ export class DashboardService {
 
 export interface Auditoria{
   tabla:string;
+  fecha_input:string;
+
+}
+
+export interface Tabla{
   fecha_input:string;
 
 }

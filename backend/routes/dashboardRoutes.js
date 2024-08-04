@@ -12,7 +12,7 @@ router.get('/dashboard/plataformasventas', topPlataformasCantidadVentas);
 router.get('/dashboard/plataformasrecaudacion', topPlataformasRecaudacion);
 router.get('/dashboard/cantidadproveedor', cantidadPedidosProveedor);
 router.get('/dashboard/recaudacionproveedor', recaudacionPedidosProveedor);
-router.get('/dashboard/tablas', getTablas);
+router.post('/dashboard/tablas', getTablas);
 router.post('/dashboard/operacionestabla', operacionesTABLA);
 
 

@@ -154,13 +154,16 @@ async function recaudacionPedidosProveedor(req, res) {
 }
 
 async function getTablas(req, res) {
+    const{fecha_input}= req.body;
+    const query= `select distinct tabla from auditoria WHERE TRUNC(fecha) = TO_DATE(:fecha_input,'YYYY-MM-DD')`;
+    const values = {fecha_input:fecha_input};
+
     try {
         // Conectar a Oracle utilizando la configuración exportada
         const connection = await oracledb.getConnection(dbConfig);
         // Ejecutar la consulta
-        const result = await connection.execute('select distinct tabla from auditoria', [],
-            { outFormat: oracledb.OUT_FORMAT_OBJECT });
-        console.log(result.row);
+        const result = await connection.execute(query,values,{ outFormat: oracledb.OUT_FORMAT_OBJECT });
+        console.log(result.rows);
         // Liberar la conexión
         await connection.close();
         // Enviar el resultado como respuesta JSON

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Chart, registerables} from 'chart.js'
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import { Auditoria, DashboardService } from '../../services/dashboard.service';
+import { Auditoria, DashboardService, Tabla } from '../../services/dashboard.service';
 import jsPDF from 'jspdf';
 import { FormsModule } from '@angular/forms';
 Chart.register(...registerables);
@@ -33,6 +33,11 @@ auditoria:Auditoria={
   tabla:"plataforma",
   fecha_input: "2024-07-20"
 };
+
+tabla:Tabla={
+  fecha_input: "2024-07-20"
+
+}
 
 videojuegosVentas:any;
 videojuegosRecaudacion:any;
@@ -108,8 +113,9 @@ ngOnInit():void{
 
   );
 
-  this.dashboard_service.getTablas().subscribe(
+  this.dashboard_service.getTablas(this.tabla).subscribe(
     res=>{
+      console.log("el resultado es ", res)
       this.tablas=res;
       this.dashboard_service.getOperacionesTablas(this.auditoria).subscribe(
         res=>{
@@ -133,6 +139,24 @@ change(){
     }
   );
 }
+
+changeFecha(){
+  this.tabla.fecha_input= this.auditoria.fecha_input;
+  this.dashboard_service.getTablas(this.tabla).subscribe(
+    res=>{
+      this.tablas=res;
+      console.log("las tablas luego de cambiar la fecha", this.tablas)
+      this.dashboard_service.getOperacionesTablas(this.auditoria).subscribe(
+        res=>{
+          this.operacionesTablas=res;
+          this.graficoOperacionesTabla();
+        }
+      );
+    }
+  );
+}
+
+
 
 
 
