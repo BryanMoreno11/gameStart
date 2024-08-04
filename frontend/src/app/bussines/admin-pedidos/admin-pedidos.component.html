@@ -1,1 +1,64 @@
-<p>admin-pedidos works!</p>
+<div>
+    <h2>Lista de Pedidos</h2>
+    <button (click)="showInsertForm()" class="insert-button">Insertar Nuevo Pedido</button>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Proveedor</th>
+          <th>Videojuego Plataforma</th>
+          <th>Sucursal</th>
+          <th>Precio Unitario</th>
+          <th>Cantidad</th>
+          <th>Descuento</th>
+          <th>Total</th>
+          <th>Estado</th>
+          <th>Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pedido of pedidos">
+          <td>{{ pedido.id_pedido ?? '' }}</td>
+          <td>{{ pedido.id_proveedor ?? '' }}</td>
+          <td>{{ pedido.id_videojuego_plataforma ?? '' }}</td>
+          <td>{{ pedido.id_sucursal ?? '' }}</td>
+          <td>{{ pedido.precio_unitario }}</td>
+          <td>{{ pedido.cantidad }}</td>
+          <td>{{ pedido.descuento }}</td>
+          <td>{{ pedido.total }}</td>
+          <td>{{ pedido.estado }}</td>
+          <td>
+            <button (click)="editPedido(pedido)">Editar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <div class="modal" [ngClass]="{'is-visible': isFormVisible}">
+      <div class="modal-content">
+        <span class="close-button" (click)="closeModal()">&times;</span>
+        <h2>{{ isEditing ? 'Editar Pedido' : 'Agregar Pedido' }}</h2>
+        <form (ngSubmit)="savePedido()" #pedidoForm="ngForm">
+          <select name="id_proveedor" [(ngModel)]="selectedPedido.id_proveedor" required>
+            <option *ngFor="let proveedor of proveedores" [value]="proveedor.ID_PROVEEDOR">{{ proveedor.NOMBRE }}</option>
+          </select>
+          <select name="id_videojuego_plataforma" [(ngModel)]="selectedPedido.id_videojuego_plataforma" required>
+            <option *ngFor="let vp of videojuegosPlataformas" [value]="vp.ID_VIDEOJUEGO_PLATAFORMA">{{ vp.NOMBRE }}</option>
+          </select>
+          <select name="id_sucursal" [(ngModel)]="selectedPedido.id_sucursal" required>
+            <option *ngFor="let sucursal of sucursales" [value]="sucursal.ID_SUCURSAL">{{ sucursal.DIRECCION }}</option>
+          </select>
+          <input name="precio_unitario" [(ngModel)]="selectedPedido.precio_unitario" placeholder="Precio Unitario" required type="number">
+          <input name="cantidad" [(ngModel)]="selectedPedido.cantidad" placeholder="Cantidad" required type="number">
+          <input name="descuento" [(ngModel)]="selectedPedido.descuento" placeholder="Descuento" required type="number">
+          <input name="total" [(ngModel)]="selectedPedido.total" placeholder="Total" required type="number">
+          <select name="estado" [(ngModel)]="selectedPedido.estado" required>
+            <option value="activo">Activo</option>
+            <option value="inactivo">Inactivo</option>
+          </select>
+          <button type="submit">{{ isEditing ? 'Actualizar' : 'Agregar' }}</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  
