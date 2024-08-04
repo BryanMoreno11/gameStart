@@ -8,35 +8,33 @@
     <swiper-slide>
         <img src="https://cdn11.bigcommerce.com/s-6334b/images/stencil/original/carousel/180/pokemonblindboxbannerfinal1.jpg?c=2" alt="">
     </swiper-slide>
-    </swiper-container>
-    <main>
-        <h4>VIDEOJUEGOS RECIENTES</h4>
+</swiper-container>
+<main>
+    <h4>VIDEOJUEGOS RECIENTES</h4>
     <hr>
-    <swiper-container class="swiper-videojuegos" init="false" >
+    <swiper-container class="swiper-videojuegos" init="false">
         @for(videojuego of videojuegos; track videojuego.ID_VIDEOJUEGO){
-            <swiper-slide  [routerLink]="['/videojuego',videojuego.ID_VIDEOJUEGO_PLATAFORMA]" >
-                <div class="card">
-                    <div class="header">
-                        <img src={{videojuego.IMAGEN[0]}} alt="" loading="lazy">
+        <swiper-slide [routerLink]="['/videojuego',videojuego.ID_VIDEOJUEGO_PLATAFORMA]">
+            <div class="card">
+                <div class="header">
+                    <img src={{videojuego.IMAGEN[0]}} alt="" loading="lazy">
 
+                </div>
+                <div class="content">
+
+                    <p class="bold">{{videojuego.TITULO}}</p>
+                    <div>
+                        <p class="bold">Costo:</p>
+                        <p> {{videojuego.PRECIO}}$</p>
                     </div>
-                    <div class="content">
-                        
-                        <p class="bold">{{videojuego.TITULO}}</p>
-                        <div >
-                            <p class="bold">Costo:</p>
-                            <p> {{videojuego.PRECIO}}$</p>
-                        </div>
-                        <div >
-                            <p class="bold">Consola:</p>
-                            <p> {{videojuego.NOMBRE_PLATAFORMA}}</p>
-                        </div>
+                    <div>
+                        <p class="bold">Consola:</p>
+                        <p> {{videojuego.NOMBRE_PLATAFORMA}}</p>
                     </div>
                 </div>
-            </swiper-slide>
+            </div>
+        </swiper-slide>
         }
-      </swiper-container>
+    </swiper-container>
 
-    </main>
-
-    
+</main>
