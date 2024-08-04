@@ -17,6 +17,8 @@ export default class AdminEmpleadosComponent implements OnInit {
   ciudades: any[] = [];
   puestos: any[] = [];
   selectedEmpleado: Empleado = this.initializeEmpleado();
+  isFormVisible: boolean = false;
+  isEditing: boolean = false;
 
   constructor(private empleadoService: EmpleadoService, private cdr: ChangeDetectorRef) { }
 
@@ -35,49 +37,60 @@ export default class AdminEmpleadosComponent implements OnInit {
 
   getSucursales(): void {
     this.empleadoService.getSucursales().subscribe(sucursales => {
-      console.log('Sucursales:', sucursales); // Verifica que los objetos tengan `id` y `nombre`
       this.sucursales = sucursales;
       this.cdr.detectChanges();
     });
   }
-  
+
   getCiudades(): void {
     this.empleadoService.getCiudades().subscribe(ciudades => {
-      console.log('Ciudades:', ciudades); // Verifica que los objetos tengan `id` y `nombre`
       this.ciudades = ciudades;
       this.cdr.detectChanges();
     });
   }
-  
+
   getPuestos(): void {
     this.empleadoService.getPuestos().subscribe(puestos => {
-      console.log('Puestos:', puestos); // Verifica que los objetos tengan `id` y `nombre`
       this.puestos = puestos;
       this.cdr.detectChanges();
     });
   }
 
   saveEmpleado(): void {
-    if (this.selectedEmpleado.id_empleado) {
-      this.empleadoService.updateEmpleado(this.selectedEmpleado.id_empleado, this.selectedEmpleado).subscribe(() => this.getEmpleados());
+    if (this.isEditing && this.selectedEmpleado.id_empleado) {
+      this.empleadoService.updateEmpleado(this.selectedEmpleado.id_empleado, this.selectedEmpleado).subscribe(() => {
+        this.getEmpleados();
+        this.isFormVisible = false;
+        this.selectedEmpleado = this.initializeEmpleado();
+      });
     } else {
-      this.empleadoService.addEmpleado(this.selectedEmpleado).subscribe(() => this.getEmpleados());
+      this.empleadoService.addEmpleado(this.selectedEmpleado).subscribe(() => {
+        this.getEmpleados();
+        this.isFormVisible = false;
+        this.selectedEmpleado = this.initializeEmpleado();
+      });
     }
-    this.selectedEmpleado = this.initializeEmpleado();
   }
 
   editEmpleado(empleado: Empleado): void {
     this.selectedEmpleado = { ...empleado };
+    this.isFormVisible = true;
+    this.isEditing = true;
     this.selectedEmpleado.fecha_nacimiento = this.formatearFecha(this.selectedEmpleado.fecha_nacimiento);
-    
   }
-
+  
   formatearFecha(fecha:any):string{
     let yyyy = fecha.getFullYear();
     let mm = String(fecha.getMonth() + 1).padStart(2, '0'); // Los meses empiezan desde 0
     let dd = String(fecha.getDate()).padStart(2, '0');
     return `${yyyy}-${mm}-${dd}`
   
+  }
+
+  showInsertForm(): void {
+    this.selectedEmpleado = this.initializeEmpleado();
+    this.isFormVisible = true;
+    this.isEditing = false;
   }
 
   deleteEmpleado(id: number): void {
@@ -98,5 +111,10 @@ export default class AdminEmpleadosComponent implements OnInit {
       correo: '',
       estado: ''
     };
+  }
+
+  closeModal(): void {
+    this.isFormVisible = false;
+    this.selectedEmpleado = this.initializeEmpleado();
   }
 }

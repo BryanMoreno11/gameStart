@@ -1,5 +1,6 @@
 <div>
   <h2>Lista de Empleados</h2>
+  <button (click)="showInsertForm()" class="insert-button">Insertar Nuevo Empleado</button>
   <table border="1">
     <thead>
       <tr>
@@ -32,33 +33,38 @@
         <td>{{ empleado.estado }}</td>
         <td>
           <button (click)="editEmpleado(empleado)">Editar</button>
-         
+       
         </td>
       </tr>
     </tbody>
   </table>
-
-  <h2>Agregar/Editar Empleado</h2>
-  <form (ngSubmit)="saveEmpleado()" #empleadoForm="ngForm">
-    <select name="id_sucursal" [(ngModel)]="selectedEmpleado.id_sucursal" required>
-      <option *ngFor="let sucursal of sucursales" [value]="sucursal.ID_SUCURSAL">{{ sucursal.DIRECCION }}</option>
-    </select>
-    <select name="id_ciudad" [(ngModel)]="selectedEmpleado.id_ciudad" required>
-      <option *ngFor="let ciudad of ciudades" [value]="ciudad.ID_CIUDAD">{{ ciudad.NOMBRE }}</option>
-    </select>
-    <select name="id_puesto" [(ngModel)]="selectedEmpleado.id_puesto" required>
-      <option *ngFor="let puesto of puestos" [value]="puesto.ID_PUESTO">{{ puesto.NOMBRE }}</option>
-    </select>
-    <input name="cedula" [(ngModel)]="selectedEmpleado.cedula" placeholder="Cédula" required>
-    <input name="nombre" [(ngModel)]="selectedEmpleado.nombre" placeholder="Nombre" required>
-    <input type="date" name="fecha_nacimiento" [(ngModel)]="selectedEmpleado.fecha_nacimiento" placeholder="Fecha de Nacimiento" required>
-    <input name="direccion" [(ngModel)]="selectedEmpleado.direccion" placeholder="Dirección" required>
-    <input name="telefono" [(ngModel)]="selectedEmpleado.telefono" placeholder="Teléfono" required>
-    <input name="correo" [(ngModel)]="selectedEmpleado.correo" placeholder="Correo" required>
-    <select name="estado" [(ngModel)]="selectedEmpleado.estado" required>
-      <option value="activo">Activo</option>
-      <option value="inactivo">Inactivo</option>
-    </select>
-    <button type="submit">{{ selectedEmpleado.id_empleado ? 'Actualizar' : 'Agregar' }}</button>
-  </form>
+  
+  <div class="modal" [ngClass]="{'is-visible': isFormVisible}">
+    <div class="modal-content">
+      <span class="close-button" (click)="closeModal()">&times;</span>
+      <h2>{{ isEditing ? 'Editar Empleado' : 'Agregar Empleado' }}</h2>
+      <form (ngSubmit)="saveEmpleado()" #empleadoForm="ngForm">
+        <select name="id_sucursal" [(ngModel)]="selectedEmpleado.id_sucursal" required>
+          <option *ngFor="let sucursal of sucursales" [value]="sucursal.ID_SUCURSAL">{{ sucursal.DIRECCION }}</option>
+        </select>
+        <select name="id_ciudad" [(ngModel)]="selectedEmpleado.id_ciudad" required>
+          <option *ngFor="let ciudad of ciudades" [value]="ciudad.ID_CIUDAD">{{ ciudad.NOMBRE }}</option>
+        </select>
+        <select name="id_puesto" [(ngModel)]="selectedEmpleado.id_puesto" required>
+          <option *ngFor="let puesto of puestos" [value]="puesto.ID_PUESTO">{{ puesto.NOMBRE }}</option>
+        </select>
+        <input name="cedula" [(ngModel)]="selectedEmpleado.cedula" placeholder="Cédula" required>
+        <input name="nombre" [(ngModel)]="selectedEmpleado.nombre" placeholder="Nombre" required>
+        <input type="date" name="fecha_nacimiento" [(ngModel)]="selectedEmpleado.fecha_nacimiento" placeholder="Fecha de Nacimiento" required>
+        <input name="direccion" [(ngModel)]="selectedEmpleado.direccion" placeholder="Dirección" required>
+        <input name="telefono" [(ngModel)]="selectedEmpleado.telefono" placeholder="Teléfono" required>
+        <input name="correo" [(ngModel)]="selectedEmpleado.correo" placeholder="Correo" required>
+        <select name="estado" [(ngModel)]="selectedEmpleado.estado" required>
+          <option value="activo">Activo</option>
+          <option value="inactivo">Inactivo</option>
+        </select>
+        <button type="submit">{{ isEditing ? 'Actualizar' : 'Agregar' }}</button>
+      </form>
+    </div>
+  </div>
 </div>
