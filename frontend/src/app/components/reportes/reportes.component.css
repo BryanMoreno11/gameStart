@@ -11,6 +11,10 @@
     gap: 20px;
 }
 
+.row{
+    margin-bottom: 20px;
+}
+
 .row h1{
     text-align: center;
 }
@@ -25,6 +29,20 @@
 .button:hover{
     cursor: pointer;
     background-color: #E73741;
+}
+
+.auditoria{
+    margin-top: 20px;
+}
+
+.auditoria select{
+    margin-right: 10px;
+    height: 30px;
+}
+
+.auditoria input{
+    height: 30px;
+
 }
 
 @media(width<=768px){

@@ -153,6 +153,53 @@ async function recaudacionPedidosProveedor(req, res) {
     }
 }
 
+async function getTablas(req, res) {
+    try {
+        // Conectar a Oracle utilizando la configuración exportada
+        const connection = await oracledb.getConnection(dbConfig);
+        // Ejecutar la consulta
+        const result = await connection.execute('select distinct tabla from auditoria', [],
+            { outFormat: oracledb.OUT_FORMAT_OBJECT });
+        console.log(result.row);
+        // Liberar la conexión
+        await connection.close();
+        // Enviar el resultado como respuesta JSON
+        res.json(result.rows);
+    } catch (err) {
+        console.error('Error en la consulta:', err);
+        res.status(500).json({ error: 'Error en el servidor' });
+    }
+}
+
+async function operacionesTABLA(req, res) {
+    const { tabla, fecha_input } = req.body;
+    const query =`
+        SELECT accion, COUNT(id) AS cantidad
+        FROM auditoria
+        WHERE tabla = :tabla
+          AND TRUNC(fecha) = TO_DATE(:fecha_input, 'YYYY-MM-DD')
+        GROUP BY accion
+    `;
+    const values = { tabla:tabla, fecha_input:fecha_input};
+
+
+    try {
+        // Conectar a Oracle utilizando la configuración exportada
+        const connection = await oracledb.getConnection(dbConfig);
+        // Ejecutar la consulta
+        const result = await connection.execute(query,values,{ outFormat: oracledb.OUT_FORMAT_OBJECT });
+        console.log(result.row);
+        // Liberar la conexión
+        await connection.close();
+        let resultado=filtroClaveValor(result.rows, 'ACCION', 'CANTIDAD');
+        // Enviar el resultado como respuesta JSON
+        res.json(resultado);
+    } catch (err) {
+        console.error('Error en la consulta:', err);
+        res.status(500).json({ error: 'Error en el servidor' });
+    }
+}
+
 function filtroClaveValor(arreglo,clave,valor){
     let elemento_result={};
     for(let elemento of arreglo){
@@ -160,6 +207,7 @@ function filtroClaveValor(arreglo,clave,valor){
     }
     return elemento_result;
 }
+
 
 module.exports={
     topVideojuegosCantidadVentas,
@@ -169,5 +217,7 @@ module.exports={
     topPlataformasCantidadVentas,
     topPlataformasRecaudacion,
     cantidadPedidosProveedor,
-    recaudacionPedidosProveedor
+    recaudacionPedidosProveedor,
+    getTablas,
+    operacionesTABLA
 }

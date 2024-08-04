@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {Chart, registerables} from 'chart.js'
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import { DashboardService } from '../../services/dashboard.service';
+import { Auditoria, DashboardService } from '../../services/dashboard.service';
 import jsPDF from 'jspdf';
-
+import { FormsModule } from '@angular/forms';
 Chart.register(...registerables);
 Chart.register(ChartDataLabels);
 Chart.defaults.set('plugins.datalabels', {
@@ -19,12 +19,21 @@ Chart.defaults.set('plugins.datalabels', {
 @Component({
   selector: 'app-reportes',
   standalone: true,
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './reportes.component.html',
   styleUrl: './reportes.component.css'
 })
 export class ReportesComponent implements OnInit {
 //#region variables
+chart:any;
+ today = new Date();
+ maxDate=this.formatearFecha(this.today);
+ //atributos para la tabla auditoria
+auditoria:Auditoria={
+  tabla:"plataforma",
+  fecha_input: "2024-07-20"
+};
+
 videojuegosVentas:any;
 videojuegosRecaudacion:any;
 generosVentas:any;
@@ -33,6 +42,8 @@ plataformasVentas:any;
 plataformasRecaudacion:any;
 proveedoresVentas:any;
 proveedoresRecaudacion:any
+tablas:any;
+operacionesTablas:any;
 //Métodos
 constructor(private dashboard_service:DashboardService){
 
@@ -97,6 +108,39 @@ ngOnInit():void{
 
   );
 
+  this.dashboard_service.getTablas().subscribe(
+    res=>{
+      this.tablas=res;
+      this.dashboard_service.getOperacionesTablas(this.auditoria).subscribe(
+        res=>{
+          this.operacionesTablas=res;
+          this.graficoOperacionesTabla();
+        }
+      );
+    }
+  );
+
+
+}
+
+
+
+change(){
+  this.dashboard_service.getOperacionesTablas(this.auditoria).subscribe(
+    res=>{
+      this.operacionesTablas=res;
+      this.graficoOperacionesTabla();
+    }
+  );
+}
+
+
+
+formatearFecha(fecha:Date):string{
+  let yyyy = fecha.getFullYear();
+  let mm = String(fecha.getMonth() + 1).padStart(2, '0'); // Los meses empiezan desde 0
+  let dd = String(fecha.getDate()).padStart(2, '0');
+  return `${yyyy}-${mm}-${dd}`
 
 }
 
@@ -602,6 +646,75 @@ graficoProveedoresVentas(){
     },
     options: {     
       
+
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            font: {
+              size:10,
+              family: 'Verdana',
+              weight: 'bold'
+            }
+          }
+        },
+        x: {
+          beginAtZero: true,
+          ticks: {
+            font: {
+              size:15,
+              family: 'Verdana',
+              weight: 'bold'
+            }
+          }
+        }
+        
+      },
+      plugins: {
+        datalabels: {
+          display: true,
+
+      },
+        legend: {
+          labels: {
+            font: {
+              size: 20,
+              family:'Verdana',
+              weight: 'bold'
+
+          }
+          }
+        }
+        
+      }
+    }
+  });
+}
+
+graficoOperacionesTabla(){
+  if (this.chart) {
+    this.chart.destroy();
+  }
+  const operaciones = Object.keys(this.operacionesTablas);
+  const cantidades = Object.values(this.operacionesTablas);
+  let colores=this.generarColores(cantidades.length);
+  const ctx = document.getElementById("OperacionesTablas") as HTMLCanvasElement;
+  this.chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: operaciones, 
+      datasets: [{
+        label:"Estadísticas de Auditoría",
+        data:cantidades, 
+        backgroundColor: colores, 
+        borderColor: colores,
+        borderWidth: 2
+      }]
+    },
+    options: {     
+      
+      maintainAspectRatio: false,     
 
       responsive: true,
       scales: {

@@ -49,4 +49,18 @@ export class DashboardService {
 
   }
 
+  getTablas(){
+    return this.http.get(`${this.API_URL}dashboard/tablas`);
+
+  }
+
+  getOperacionesTablas(auditoria:Auditoria){
+    return this.http.post(`${this.API_URL}dashboard/operacionestabla`,auditoria);
+  }
+}
+
+export interface Auditoria{
+  tabla:string;
+  fecha_input:string;
+
 }
