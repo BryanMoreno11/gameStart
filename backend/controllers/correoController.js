@@ -44,7 +44,7 @@ async function enviarCorreoPrueba(req, res) {
                                             alignment: 'right',
                                         },
                                         {
-                                            text: body.cedula, // Valor del número de recibo
+                                            text: body.id_venta, // Valor del número de recibo
                                             bold: true,
                                             color: '#333333',
                                             fontSize: 12,
@@ -138,7 +138,7 @@ async function enviarCorreoPrueba(req, res) {
                         margin: [0, 7, 0, 3],
                     },
                     {
-                        text: 'Dirección',
+                        text: 'Ciudad',
                         color: '#aaaaab',
                         bold: true,
                         margin: [0, 7, 0, 3],
