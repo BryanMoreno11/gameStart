@@ -10,14 +10,18 @@ body {
 }
 
 .formulario {
-    width: 400px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 300px;
     background: white;
     border: 2px solid #d6d6d6;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    text-align: center;
     padding: 20px;
-    box-sizing: border-box;
+    text-align: center;
 }
 
 .formulario h1 {
@@ -114,4 +118,10 @@ body {
 .button-verify:hover {
     background: #005ecb;
     transition: .5s;
+}
+
+@media (min-width: 768px) {
+    .formulario {
+        max-width: 400px;
+    }
 }

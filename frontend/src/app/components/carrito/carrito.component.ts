@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { RouterLink } from '@angular/router';
 import { Venta, VentaDetalle, VentaService } from '../../services/venta.service';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-carrito',
@@ -35,11 +37,11 @@ export class CarritoComponent {
   vistaVenta:any;
   vistaVentaDetalle:any;
   //#region Métodos
-  constructor(private carrito_service:CarritoService, private venta_service:VentaService) {
+  constructor(private carrito_service:CarritoService, private venta_service:VentaService,private httpclien:HttpClient, private router:Router) {
     this.productos=carrito_service.productos;
     this.carrito=carrito_service.carrito;
     console.log(this.carrito.total_venta);
-    this.id_cliente=1;
+    this.id_cliente= Number(localStorage.getItem('id_cliente'));
   }
 
   actualizarCantidad(producto:any, cantidad:number){
@@ -91,56 +93,62 @@ export class CarritoComponent {
   }
 
   realizarCompra(){
-    Swal.fire({
-      title: "¿Estás seguro de proceder con la compra?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Sí, continuar",
-      cancelButtonText: "Cancelar"
-    }).then((result) => {
-      if (result.isConfirmed) {
-        //Setear datos para venta
-        this.carrito_service.efectuarCompra();
-        this.venta.id_cliente=this.id_cliente;
-        this.venta.subtotal=this.carrito.subtotal_venta;
-        this.venta.iva=this.carrito.iva;
-        this.venta.total_venta=this.carrito.total_venta;
-        //Llamada a la api
-        this.venta_service.insertVenta(this.venta).subscribe((res:any)=>{
-        this.realizarVenta(res.id).then(
-          res=>{
-            //------------Obtención del objeto venta y arreglo de detalle venta
-            this.venta_service.getVenta(this.venta_detalle.id_venta).subscribe((res:any)=>{
-              this.vistaVenta=res[0];
-              console.log("La vista de la venta es ", this.vistaVenta);
-              this.venta_service.getVentaDetalle(this.venta_detalle.id_venta).subscribe((res:any)=>{
-                this.vistaVentaDetalle= res;
-                console.log("La vista de la venta detalle es ", this.vistaVentaDetalle);
-                //---Mensaje final
-              this.productos=this.carrito_service.productos;
-              this.carrito=this.carrito_service.carrito;
-              Swal.fire({
-                title: "¡Compra efectuada con éxito!",
-                text:"En su correo podrá ver la factura",
-                icon: "success"
+    const valor = localStorage.getItem('loginUsuario') === 'true';
+    console.log('valor: ' + valor);
+    if  (!valor) {
+      Swal.fire({
+        title: "¡Debes iniciar sesión para realizar la compra!",
+        icon: "warning"
+      });
+      this.router.navigate(['/login-client']);
+    }
+    else{
+      Swal.fire({
+        title: "¿Estás seguro de proceder con la compra?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sí, continuar",
+        cancelButtonText: "Cancelar"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          //Setear datos para venta
+          this.carrito_service.efectuarCompra();
+          this.venta.id_cliente=this.id_cliente;
+          this.venta.subtotal=this.carrito.subtotal_venta;
+          this.venta.iva=this.carrito.iva;
+          this.venta.total_venta=this.carrito.total_venta;
+          //Llamada a la api
+          this.venta_service.insertVenta(this.venta).subscribe((res:any)=>{
+          this.realizarVenta(res.id).then(
+            res=>{
+              //------------Obtención del objeto venta y arreglo de detalle venta
+              this.venta_service.getVenta(this.venta_detalle.id_venta).subscribe((res:any)=>{
+                this.vistaVenta=res[0];
+                console.log("La vista de la venta es ", this.vistaVenta);
+                this.venta_service.getVentaDetalle(this.venta_detalle.id_venta).subscribe((res:any)=>{
+                  this.vistaVentaDetalle= res;
+                  console.log("La vista de la venta detalle es ", this.vistaVentaDetalle);
+                  //---Mensaje final
+                this.productos=this.carrito_service.productos;
+                this.carrito=this.carrito_service.carrito;
+                this.enviarCorreoCliente();
+                Swal.fire({
+                  title: "¡Compra efectuada con éxito!",
+                  text:"En su correo podrá ver la factura",
+                  icon: "success"
+                });
+                });
               });
-
-              });
-              
-            });
-
-
-          }
-        );
-        });
-
-
-
-       
-      }
-    });
+  
+  
+            }
+          );
+          });
+        }
+      });
+    }
  }
 
  async realizarVenta(id_venta:number) {
@@ -164,7 +172,25 @@ export class CarritoComponent {
   }
 }
 
-
+enviarCorreoCliente(){
+  console.log("Enviando correo...");
+  let params = {
+    cedula: this.vistaVenta.CEDULA,
+    nombre: this.vistaVenta.NOMBRE_CLIENTE,
+    correo: this.vistaVenta.CORREO,
+    fecha_venta: this.vistaVenta.FECHA_VENTA,
+    cod_venta: this.vistaVenta.CODIGO_VENTA,
+    subtotal: this.vistaVenta.SUBTOTAL,
+    iva: this.vistaVenta.IVA,
+    total_venta: this.vistaVenta.TOTAL_VENTA,
+    productos: this.vistaVentaDetalle,
+    id_venta: this.vistaVenta.ID_VENTA,
+    ciudad: this.vistaVenta.CIUDAD,
+  }
+  this.httpclien.post('http://localhost:3000/api/correo/',params).subscribe(resp=>{
+  console.log(resp);
+  });
+}
 
 
 }

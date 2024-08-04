@@ -12,7 +12,7 @@
             <div class="token">
                 <img *ngIf="qrCodeUrl" [src]="qrCodeUrl" alt="QR code" />
             </div>
-            <button class="button-verify">Continuar</button>
+            <button class="button-verify" (click)="toLogin()">Continuar</button>
         </div>
         <div>
         </div>

@@ -6,6 +6,11 @@
 
 <body>
     <div class="formulario">
+        <div class="logo">
+            <a href="">
+                <img src="../../../assets/default_transparent_765x625.png" alt="No pudo cargar">
+            </a>
+        </div>
         <h1>Registro de Usuario</h1>
         <form (ngSubmit)="insertarUsuario()" #usuarioForm="ngForm">
             <div class="username">
@@ -29,8 +34,12 @@
                 <label>Telefono</label>
             </div>
             <div class="username">
-                <input type="text" required [(ngModel)]="usuario.rol" name="rol">
-                <label>Rol</label>
+                <select required [(ngModel)]="usuario.rol" name="rol">
+                    <option value="" disabled selected>Seleccione un rol</option>
+                    <option value="admin">Admin</option>
+                    <option value="ventas">Ventas</option>
+                    <option value="inventario">Inventario</option>
+                </select>
             </div>
             <div class="recordar">¿Olvidaste tu contraseña?</div>
             <input type="submit" value="Registrarse">

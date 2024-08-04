@@ -1,31 +1,29 @@
-/*Estilos generales*/
-footer{
+footer {
+    font-family: "Poppins", sans-serif;
     /*min-height: 300px;*/
     background-color: #065392;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin-top: 30px;
     /*padding-bottom: 20px;*/
-
 }
 
-h5{
+h5 {
     text-transform: uppercase;
     font-weight: bold;
     text-align: center;
 }
 
-.container{
+.container {
     color: #ffffff;
     display: flex;
     flex-direction: row;
-   justify-content: space-evenly;
-   flex-wrap: wrap;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
 }
 
-.container *{
-   margin-bottom:0px ;
+.container * {
+    margin-bottom: 0px;
 }
 
 .franja {
@@ -34,26 +32,25 @@ h5{
     margin-top: 20px;
 }
 
+
 /*Estilos de los elementos*/
 
-.elemento{
+.elemento {
     width: 40%;
     height: fit-content;
-
 }
 
-.copyright{
+.copyright {
     width: 100%;
-    text-align: center;    
+    text-align: center;
 }
 
-.redes>ul{
+.redes>ul {
     list-style: none;
     padding: 0px;
-   
 }
 
-.redes>ul>li{
+.redes>ul>li {
     display: inline;
     margin-right: 20px;
 }
@@ -63,21 +60,19 @@ i {
     font-size: 25px
 }
 
+
 /*Media Queries*/
 
-@media (width<=768px){
-    .container{
+@media (width<=768px) {
+    .container {
         flex-direction: column;
         align-items: center;
     }
-    .elemento{
+    .elemento {
         width: 80%;
         text-align: center;
     }
-
-    .copyright{
+    .copyright {
         width: 100%;
-
     }
 }
-

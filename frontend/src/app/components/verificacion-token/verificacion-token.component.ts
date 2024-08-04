@@ -51,7 +51,7 @@ getSecret(nombre: string) {
           text: 'Has iniciado sesion',
           icon: 'success'
         })
-        this.router.navigate(['/']);
+        this.router.navigate(['/dashboard']);
       },
       error => {
         console.error('Error en la verificación del token:', error);
