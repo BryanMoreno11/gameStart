@@ -1,51 +1,53 @@
 <div>
   <h2>Lista de Videojuegos</h2>
   <button (click)="showInsertForm()" class="insert-button">Insertar Nuevo Videojuego</button>
-  <table border="1">
-    <thead>
-      <tr>
-        <th>ID Videojuego Plataforma</th>
-        <th>ID Videojuego</th>
-        <th>Título</th>
-        <th>Imagen</th>
-        <th>Descripción</th>
-        <th>Precio</th>
-        <th>Descuento</th>
-        <th>Fecha Creación</th>
-        <th>Estado</th>
-        <th>ID Desarrolladora</th>
-        <th>Nombre Desarrolladora</th>
-        <th>ID Plataforma</th>
-        <th>Nombre Plataforma</th>
-        <th>Géneros</th>
-        <th>Stock</th>
-        <th>Opciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let videojuego of vistaVideojuegos">
-        <td>{{ videojuego.id_videojuego_plataforma }}</td>
-        <td>{{ videojuego.id_videojuego }}</td>
-        <td>{{ videojuego.titulo }}</td>
-        <td><img [src]="videojuego.imagen" alt="Imagen del juego" style="max-width: 100px;"></td>
-        <td>{{ videojuego.descripcion_videojuego }}</td>
-        <td>{{ videojuego.precio | currency }}</td>
-        <td>{{ videojuego.descuento | percent }}</td>
-        <td>{{ videojuego.fecha_creacion_videojuego | date:'short' }}</td>
-        <td>{{ videojuego.estado_videojuego }}</td>
-        <td>{{ videojuego.id_desarrolladora }}</td>
-        <td>{{ videojuego.nombre_desarrolladora }}</td>
-        <td>{{ videojuego.id_plataforma }}</td>
-        <td>{{ videojuego.nombre_plataforma }}</td>
-        <td>{{ videojuego.generos }}</td>
-        <td>{{ videojuego.stock }}</td>
-        <td>
-          <button (click)="editVideojuego(videojuego)">Editar</button>
-          
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>ID Videojuego Plataforma</th>
+          <th>ID Videojuego</th>
+          <th>Título</th>
+          <th>Imagen</th>
+          <th>Descripción</th>
+          <th>Precio</th>
+          <th>Descuento</th>
+          <th>Fecha Creación</th>
+          <th>Estado</th>
+          <th>ID Desarrolladora</th>
+          <th>Nombre Desarrolladora</th>
+          <th>ID Plataforma</th>
+          <th>Nombre Plataforma</th>
+          <th>Géneros</th>
+          <th>Stock</th>
+          <th>Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let videojuego of vistaVideojuegos">
+          <td data-label="ID Videojuego Plataforma">{{ videojuego.id_videojuego_plataforma }}</td>
+          <td data-label="ID Videojuego">{{ videojuego.id_videojuego }}</td>
+          <td data-label="Título">{{ videojuego.titulo }}</td>
+          <td data-label="Imagen">{{ videojuego.imagen }}</td>
+          <td data-label="Descripción">{{ videojuego.descripcion_videojuego }}</td>
+          <td data-label="Precio">{{ videojuego.precio | currency }}</td>
+          <td data-label="Descuento">{{ videojuego.descuento | percent }}</td>
+          <td data-label="Fecha Creación">{{ videojuego.fecha_creacion_videojuego | date:'short' }}</td>
+          <td data-label="Estado">{{ videojuego.estado_videojuego }}</td>
+          <td data-label="ID Desarrolladora">{{ videojuego.id_desarrolladora }}</td>
+          <td data-label="Nombre Desarrolladora">{{ videojuego.nombre_desarrolladora }}</td>
+          <td data-label="ID Plataforma">{{ videojuego.id_plataforma }}</td>
+          <td data-label="Nombre Plataforma">{{ videojuego.nombre_plataforma }}</td>
+          <td data-label="Géneros">{{ videojuego.generos }}</td>
+          <td data-label="Stock">{{ videojuego.stock }}</td>
+          <td data-label="Opciones">
+            <button (click)="editVideojuego(videojuego)">Editar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
   <div class="modal" [ngClass]="{'is-visible': isFormVisible}">
     <div class="modal-content">

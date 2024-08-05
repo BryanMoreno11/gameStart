@@ -148,3 +148,4 @@ export interface VistaVideojuego {
   generos: string | null;
   stock: number | null;
 }
+
