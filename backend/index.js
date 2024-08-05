@@ -24,6 +24,7 @@ const pedidosRoutes = require('./routes/pedidosRoutes');
 const proveedoresRoutes = require('./routes/proveedoresRoutes');
 const videojuego_plataformaRoutes = require('./routes/videojuego_plataformaRoutes');
 
+
 app.use('/api', plataformaRoutes);
 app.use('/api', videojuegoRoutes);
 app.use('/api', usuariosRoutes);

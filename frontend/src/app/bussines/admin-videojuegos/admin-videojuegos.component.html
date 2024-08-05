@@ -1,1 +1,88 @@
-<p>admin-videojuegos works!</p>
+<div>
+  <h2>Lista de Videojuegos</h2>
+  <button (click)="showInsertForm()" class="insert-button">Insertar Nuevo Videojuego</button>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>ID Videojuego Plataforma</th>
+        <th>ID Videojuego</th>
+        <th>Título</th>
+        <th>Imagen</th>
+        <th>Descripción</th>
+        <th>Precio</th>
+        <th>Descuento</th>
+        <th>Fecha Creación</th>
+        <th>Estado</th>
+        <th>ID Desarrolladora</th>
+        <th>Nombre Desarrolladora</th>
+        <th>ID Plataforma</th>
+        <th>Nombre Plataforma</th>
+        <th>Géneros</th>
+        <th>Stock</th>
+        <th>Opciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let videojuego of vistaVideojuegos">
+        <td>{{ videojuego.id_videojuego_plataforma }}</td>
+        <td>{{ videojuego.id_videojuego }}</td>
+        <td>{{ videojuego.titulo }}</td>
+        <td><img [src]="videojuego.imagen" alt="Imagen del juego" style="max-width: 100px;"></td>
+        <td>{{ videojuego.descripcion_videojuego }}</td>
+        <td>{{ videojuego.precio | currency }}</td>
+        <td>{{ videojuego.descuento | percent }}</td>
+        <td>{{ videojuego.fecha_creacion_videojuego | date:'short' }}</td>
+        <td>{{ videojuego.estado_videojuego }}</td>
+        <td>{{ videojuego.id_desarrolladora }}</td>
+        <td>{{ videojuego.nombre_desarrolladora }}</td>
+        <td>{{ videojuego.id_plataforma }}</td>
+        <td>{{ videojuego.nombre_plataforma }}</td>
+        <td>{{ videojuego.generos }}</td>
+        <td>{{ videojuego.stock }}</td>
+        <td>
+          <button (click)="editVideojuego(videojuego)">Editar</button>
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="modal" [ngClass]="{'is-visible': isFormVisible}">
+    <div class="modal-content">
+      <span class="close-button" (click)="closeModal()">&times;</span>
+      <h2>{{ isEditing ? 'Editar Videojuego' : 'Agregar Videojuego' }}</h2>
+      <form (ngSubmit)="saveVideojuego()" #videojuegoForm="ngForm">
+        <input name="titulo" [(ngModel)]="selectedVideojuego.titulo" placeholder="Título" required>
+        <div *ngIf="validationMessages['titulo']" class="error-message">
+          {{ validationMessages['titulo'] }}
+        </div>
+
+        <textarea name="descripcion" [(ngModel)]="selectedVideojuego.descripcion" placeholder="Descripción" required></textarea>
+        <div *ngIf="validationMessages['descripcion']" class="error-message">
+          {{ validationMessages['descripcion'] }}
+        </div>
+
+        <input name="id_desarrolladora" [(ngModel)]="selectedVideojuego.id_desarrolladora" placeholder="ID Desarrolladora" required type="number">
+        <div *ngIf="validationMessages['id_desarrolladora']" class="error-message">
+          {{ validationMessages['id_desarrolladora'] }}
+        </div>
+
+        <input name="fecha_creacion" [(ngModel)]="selectedVideojuego.fecha_creacion" placeholder="Fecha Creación" required type="datetime-local">
+        <div *ngIf="validationMessages['fecha_creacion']" class="error-message">
+          {{ validationMessages['fecha_creacion'] }}
+        </div>
+
+        <select name="estado" [(ngModel)]="selectedVideojuego.estado" required>
+          <option value="" disabled selected>Seleccione un Estado</option>
+          <option value="activo">Activo</option>
+          <option value="inactivo">Inactivo</option>
+        </select>
+        <div *ngIf="validationMessages['estado']" class="error-message">
+          {{ validationMessages['estado'] }}
+        </div>
+
+        <button type="submit">{{ isEditing ? 'Actualizar' : 'Agregar' }}</button>
+      </form>
+    </div>
+  </div>
+</div>
