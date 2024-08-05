@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -11,9 +10,6 @@ export class VideojuegosService {
   private apiUrl = 'http://localhost:3000/api';
 
   constructor(private http: HttpClient) { }
-
-
-
 
   getVideojuegosnormal(): Observable<Videojuego[]> {
     return this.http.get<ApiVideojuego[]>(`${this.apiUrl}/videojuegos/normal`).pipe(
@@ -66,8 +62,6 @@ export class VideojuegosService {
     };
   }
 
-
-
   private transformVistaVideojuego(apiVistaVideojuego: ApiVistaVideojuego): VistaVideojuego {
     return {
       id_videojuego_plataforma: apiVistaVideojuego.ID_VIDEOJUEGO_PLATAFORMA,
@@ -76,7 +70,7 @@ export class VideojuegosService {
       imagen: apiVistaVideojuego.IMAGEN,
       descripcion_videojuego: apiVistaVideojuego.DESCRIPCION_VIDEOJUEGO,
       precio: apiVistaVideojuego.PRECIO,
-      descuento: apiVistaVideojuego.DESCUENTO,
+      descuento: apiVistaVideojuego.DESCUENTO !== null ? apiVistaVideojuego.DESCUENTO : 0,
       fecha_creacion_videojuego: new Date(apiVistaVideojuego.FECHA_CREACION_VIDEOJUEGO),
       estado_videojuego: apiVistaVideojuego.ESTADO_VIDEOJUEGO,
       id_desarrolladora: apiVistaVideojuego.ID_DESARROLLADORA,
@@ -87,9 +81,8 @@ export class VideojuegosService {
       stock: apiVistaVideojuego.STOCK
     };
   }
-
- 
 }
+
 
 // ApiVideojuego.ts
 export interface ApiVideojuego {
@@ -107,7 +100,7 @@ export interface Videojuego {
   id_desarrolladora: number | null;
   titulo: string | null;
   descripcion: string | null;
-  fecha_creacion?: Date | null;
+  fecha_creacion?: Date | null | string;
   estado: string | null;
 }
 

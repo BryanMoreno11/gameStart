@@ -41,14 +41,19 @@ export default class AdminVideojuegosComponent implements OnInit {
       return;
     }
 
-    if (this.isEditing && this.selectedVideojuego.id_videojuego) {
-      this.videojuegosService.updateVideojuego(this.selectedVideojuego.id_videojuego, this.selectedVideojuego).subscribe(() => {
+    const formattedVideojuego = {
+      ...this.selectedVideojuego,
+      fecha_creacion: this.formatDate(this.selectedVideojuego.fecha_creacion)
+    };
+
+    if (this.isEditing && formattedVideojuego.id_videojuego) {
+      this.videojuegosService.updateVideojuego(formattedVideojuego.id_videojuego, formattedVideojuego).subscribe(() => {
         this.getVistaVideojuegos();
         this.isFormVisible = false;
         this.selectedVideojuego = this.initializeVideojuego();
       });
     } else {
-      this.videojuegosService.addVideojuego(this.selectedVideojuego).subscribe(() => {
+      this.videojuegosService.addVideojuego(formattedVideojuego).subscribe(() => {
         this.getVistaVideojuegos();
         this.isFormVisible = false;
         this.selectedVideojuego = this.initializeVideojuego();
@@ -91,11 +96,31 @@ export default class AdminVideojuegosComponent implements OnInit {
       estado: null
     };
   }
-  
-  
-  
+
   closeModal(): void {
     this.isFormVisible = false;
     this.selectedVideojuego = this.initializeVideojuego();
+  }
+
+  formatDate(date: Date | string | null | undefined): string {
+    if (!date) {
+      return '';
+    }
+    const d = new Date(date);
+    const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+    const day = d.getDate().toString().padStart(2, '0');
+    const month = months[d.getMonth()];
+    const year = d.getFullYear().toString().slice(-2);
+    const hours = d.getHours();
+    const minutes = d.getMinutes().toString().padStart(2, '0');
+    const seconds = d.getSeconds().toString().padStart(2, '0');
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const formattedHours = (hours % 12 || 12).toString().padStart(2, '0');
+
+    return `${day}-${month}-${year} ${formattedHours}.${minutes}.${seconds}.000000000 ${ampm}`;
+  }
+
+  getDiscountDisplay(discount: number | null): string {
+    return discount !== null ? `${(discount * 100).toFixed(2)}%` : 'Ninguno';
   }
 }

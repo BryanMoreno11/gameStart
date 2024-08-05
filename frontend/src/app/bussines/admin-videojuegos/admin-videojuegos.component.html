@@ -32,7 +32,9 @@
           <td data-label="Imagen">{{ videojuego.imagen }}</td>
           <td data-label="Descripción">{{ videojuego.descripcion_videojuego }}</td>
           <td data-label="Precio">{{ videojuego.precio | currency }}</td>
-          <td data-label="Descuento">{{ videojuego.descuento | percent }}</td>
+          <td data-label="Descuento">
+            {{ videojuego.descuento !== null ? (videojuego.descuento | percent) : 'Ninguno' }}
+          </td>          
           <td data-label="Fecha Creación">{{ videojuego.fecha_creacion_videojuego | date:'short' }}</td>
           <td data-label="Estado">{{ videojuego.estado_videojuego }}</td>
           <td data-label="ID Desarrolladora">{{ videojuego.id_desarrolladora }}</td>
