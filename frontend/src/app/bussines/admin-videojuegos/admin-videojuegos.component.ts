@@ -40,26 +40,41 @@ export default class AdminVideojuegosComponent implements OnInit {
     if (!this.validateVideojuego()) {
       return;
     }
-
+  
     const formattedVideojuego = {
       ...this.selectedVideojuego,
-      fecha_creacion: this.formatDate(this.selectedVideojuego.fecha_creacion)
+      // Remove fecha_creacion from here as it's generated automatically in the database
     };
-
+  
+    console.log('Videojuego to be saved:', formattedVideojuego);
+  
     if (this.isEditing && formattedVideojuego.id_videojuego) {
-      this.videojuegosService.updateVideojuego(formattedVideojuego.id_videojuego, formattedVideojuego).subscribe(() => {
-        this.getVistaVideojuegos();
-        this.isFormVisible = false;
-        this.selectedVideojuego = this.initializeVideojuego();
-      });
+      this.videojuegosService.updateVideojuego(formattedVideojuego.id_videojuego, formattedVideojuego).subscribe(
+        (response) => {
+          console.log('Update response:', response);
+          this.getVistaVideojuegos();
+          this.isFormVisible = false;
+          this.selectedVideojuego = this.initializeVideojuego();
+        },
+        (error) => {
+          console.error('Error updating videojuego:', error);
+        }
+      );
     } else {
-      this.videojuegosService.addVideojuego(formattedVideojuego).subscribe(() => {
-        this.getVistaVideojuegos();
-        this.isFormVisible = false;
-        this.selectedVideojuego = this.initializeVideojuego();
-      });
+      this.videojuegosService.addVideojuego(formattedVideojuego).subscribe(
+        (response) => {
+          console.log('Add response:', response);
+          this.getVistaVideojuegos();
+          this.isFormVisible = false;
+          this.selectedVideojuego = this.initializeVideojuego();
+        },
+        (error) => {
+          console.error('Error adding videojuego:', error);
+        }
+      );
     }
   }
+  
 
   editVideojuego(videojuego: VistaVideojuego): void {
     this.selectedVideojuego = {
