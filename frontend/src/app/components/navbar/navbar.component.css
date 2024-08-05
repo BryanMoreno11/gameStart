@@ -76,6 +76,10 @@
     background-color: transparent;
 }
 
+.login:hover{
+    cursor: pointer;
+}
+
 
 /* Estilos responsivos */
 

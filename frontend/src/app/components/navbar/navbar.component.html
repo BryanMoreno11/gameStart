@@ -12,6 +12,6 @@
         <a routerLink="/videojuegos" routerLinkActive="active">Videojuegos</a>
         <a routerLink="/carrito" routerLinkActive="active">Carrito</a>
         <a [routerLink]="linkRoute" routerLinkActive="active">{{ linkText }}</a>
-        <button *ngIf="isLoggedIn" (click)="logout()">Cerrar sesión</button>
+        <a class="login" *ngIf="isLoggedIn" (click)="logout()">Cerrar sesión</a>
     </div>
 </nav>
