@@ -7,12 +7,12 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class VideojuegosService {
-  private apiUrl = 'http://localhost:3000/api';
+  private apiUrl = 'http://localhost:3000/api/';
 
   constructor(private http: HttpClient) { }
 
   getVideojuegosnormal(): Observable<Videojuego[]> {
-    return this.http.get<ApiVideojuego[]>(`${this.apiUrl}/videojuegos/normal`).pipe(
+    return this.http.get<ApiVideojuego[]>(`${this.apiUrl}videojuegos/normal`).pipe(
       map((apiVideojuegos: ApiVideojuego[]) => apiVideojuegos.map((apiVideojuego: ApiVideojuego) => this.transformVideojuego(apiVideojuego)))
     );
   }
@@ -34,21 +34,21 @@ export class VideojuegosService {
   }
 
   getVideojuegosvista(): Observable<VistaVideojuego[]> {
-    return this.http.get<ApiVistaVideojuego[]>(`${this.apiUrl}/videojuegos`).pipe(
+    return this.http.get<ApiVistaVideojuego[]>(`${this.apiUrl}videojuegos`).pipe(
       map((apiVideojuegosvista: ApiVistaVideojuego[]) => apiVideojuegosvista.map((apiVideojuegosvista: ApiVistaVideojuego) => this.transformVistaVideojuego(apiVideojuegosvista)))
     );
   }
 
   addVideojuego(videojuego: Videojuego): Observable<any> {
-    return this.http.post(`${this.apiUrl}/videojuego`, videojuego);
+    return this.http.post(`${this.apiUrl}videojuego`, videojuego);
   }
 
   updateVideojuego(id: number, videojuego: Videojuego): Observable<any> {
-    return this.http.put(`${this.apiUrl}/videojuego/${id}`, videojuego);
+    return this.http.put(`${this.apiUrl}videojuego/${id}`, videojuego);
   }
 
   deleteVideojuego(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/videojuego/${id}`);
+    return this.http.delete(`${this.apiUrl}videojuego/${id}`);
   }
 
   private transformVideojuego(apiVideojuego: ApiVideojuego): Videojuego {
