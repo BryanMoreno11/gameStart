@@ -17,10 +17,10 @@ export interface ApiPedido {
     id_videojuego_plataforma: number | null;
     id_sucursal: number | null;
     fecha_pedido?: Date | null;
-    precio_unitario: number;
-    cantidad: number;
-    descuento: number;
-    total: number;
-    estado: string;
+    precio_unitario: number | null;
+    cantidad: number | null;
+    descuento: number | null;
+    total: number | null;
+    estado: string | null;
   }
   

@@ -36,8 +36,14 @@ export class PedidoService {
   }
 
   getVideojuegosPlataformas(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/videojuegos-plataformas`);
+    return this.http.get<any[]>(`${this.apiUrl}/videojuego-plataformas`).pipe(
+      map(videojuegosPlataformas => {
+        console.log('Datos de Videojuegos Plataformas:', videojuegosPlataformas); // Añadido para depuración
+        return videojuegosPlataformas;
+      })
+    );
   }
+  
 
   getSucursales(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/sucursales`);
